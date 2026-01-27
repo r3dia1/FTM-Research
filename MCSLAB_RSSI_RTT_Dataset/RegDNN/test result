@@ -1,0 +1,43 @@
+Sample per rp = 50
+    1.  no mcap
+        *   DNN
+            === Final Results ===
+            Avg Accuracy: 93.18% (+/- 1.59)
+            Avg MDE:      0.1296m (+/- 0.0314)
+        
+        *   CVAE+DNN
+            === Final Results ===
+            Avg Accuracy: 93.80% (+/- 1.24)
+            Avg MDE:      0.1201m (+/- 0.0231)
+
+    2.  mcap:AP1
+        *   DNN
+            === Final Results ===
+            Avg Accuracy: 98.04% (+/- 1.38)
+            Avg MDE:      0.0388m (+/- 0.0309)
+
+        *   RegDNN
+            === Final Results ===
+            Avg Accuracy: 98.04% (+/- 1.14)
+            Avg MDE:      0.0393m (+/- 0.0238)
+        
+    3.  mcap:AP3
+        *   DNN
+            === Final Results ===
+            Avg Accuracy: 95.62% (+/- 1.41)
+            Avg MDE:      0.0716m (+/- 0.0245)
+
+        *   RegDNN
+            === Final Results ===
+            Avg Accuracy: 96.11% (+/- 1.23)
+            Avg MDE:      0.0679m (+/- 0.0197)
+
+        *   CVAE+DNN
+            === Final Results ===
+            Avg Accuracy: 96.49% (+/- 1.12)
+            Avg MDE:      0.0629m (+/- 0.0214)
+
+    4.  all mcap
+        === Final Results ===
+        Avg Accuracy: 98.78% (+/- 0.66)
+        Avg MDE:      0.0232m (+/- 0.0178)

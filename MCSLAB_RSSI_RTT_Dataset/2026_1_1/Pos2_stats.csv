@@ -1,0 +1,4 @@
+Feature,Single_Mean,Full_Mean,Offset (Diff),Single_Std,Full_Std,Std_Ratio,Wasserstein_Dist,KS_P_Value
+RSSI,-60.2,-62.28,-2.08,6.49,5.15,0.79,2.13,3.63e-155
+Dist_mm,4172.1,4697.68,525.58,2310.96,2642.41,1.14,528.64,6.18e-129
+Std_mm,636.19,604.43,-31.76,491.76,473.17,0.96,41.01,3.43e-16
