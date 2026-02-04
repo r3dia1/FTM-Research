@@ -1,0 +1,9 @@
+Mode: Pure RTT | Features: RTT(3)
+Model Input Dimension: 3
+Start Training Seed 42...
+Seed 42 | Src MDE: 0.1572 | Tgt MDE: 0.9537
+Start Training Seed 6767...
+Seed 6767 | Src MDE: 0.0871 | Tgt MDE: 0.9708
+Start Training Seed 123456...
+Seed 123456 | Src MDE: 0.0946 | Tgt MDE: 1.0345
+Finished Combo Only_RTT_2_3_4. Results saved.

@@ -1,0 +1,9 @@
+==========================================
+Experiment: DNN_Only_RTT_1_2_3
+Mode: rtt | Input Dim: 3
+Features: RTT
+==========================================
+Seed 42 | Best Epoch 345 | Tgt MDE: 1.0377m
+Seed 6767 | Best Epoch 343 | Tgt MDE: 1.0027m
+Seed 123456 | Best Epoch 244 | Tgt MDE: 1.0062m
+Finished DNN_Only_RTT_1_2_3. Results saved.

@@ -70,7 +70,7 @@ def load_wifi_data(csv_path, is_source=True, samples_per_label=None):
     # rssi_cols = ['RSSI_1', 'RSSI_2', 'RSSI_3', 'RSSI_4', 'Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3', 'Diff_RSSI_2_4', 'Diff_RSSI_3_4']
     # rtt_cols = ['Dist_mm_1', 'Dist_mm_2', 'Dist_mm_3', 'Dist_mm_4']
     # rtt_cols = ['Dist_mm_1', 'Dist_mm_2', 'Dist_mm_4']
-    rtt_cols = ['Dist_mm_3', 'Dist_mm_4']
+    rtt_cols = ['Dist_mm_1', 'Dist_mm_2']
     # rtt_cols = ['Dist_mm_1']
     
     for col in rssi_cols:
@@ -169,7 +169,7 @@ def main():
     # ----------------------------------------
     # [設定] 選擇要跑的模式: 'rtt' 或 'rssi'
     # ----------------------------------------
-    USE_MODE = 'rssi' 
+    USE_MODE = 'rtt' 
     seed_candidate = [42, 6767, 123456]
     source_acc = []
     source_mde = []
@@ -183,11 +183,11 @@ def main():
         
         # INPUT_DIM = 4
         # INPUT_DIM = 6
-        INPUT_DIM = 4
+        INPUT_DIM = 2
 
         SOURCE_CSV = '../2026_1_1/all/All_Data_With_RSSI_Diff.csv'  
-        # TARGET_CSV = '../2026_1_2/All_Data_With_RSSI_Diff.csv'
-        TARGET_CSV = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_1_14/All_Data_With_RSSI_Diff.csv'
+        TARGET_CSV = '../2026_1_23/All_Data_With_RSSI_Diff.csv'
+        # TARGET_CSV = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_1_14/All_Data_With_RSSI_Diff.csv'
 
         print(f"Using device: {DEVICE}")
         print(f"Running Baseline DNN (Strict Evaluation Mode) with mode: {USE_MODE}")

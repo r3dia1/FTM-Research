@@ -112,9 +112,9 @@ def load_wifi_data(csv_path, is_source=True, samples_per_label=None):
     # rssi_cols = ['Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3', 'Diff_RSSI_2_4', 'Diff_RSSI_3_4']
     # rssi_cols = ['RSSI_1', 'RSSI_2', 'RSSI_3', 'RSSI_4', 'Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3', 'Diff_RSSI_2_4', 'Diff_RSSI_3_4']
     # rtt_cols = ['Dist_mm_1', 'Dist_mm_2', 'Dist_mm_3', 'Dist_mm_4']
-    rtt_cols = ['Dist_mm_2', 'Dist_mm_3', 'Dist_mm_4']
-    # rtt_cols = ['Dist_mm_3', 'Dist_mm_4']
-    # rtt_cols = ['Dist_mm_4']
+    # rtt_cols = ['Dist_mm_2', 'Dist_mm_3', 'Dist_mm_4']
+    # rtt_cols = ['Dist_mm_1', 'Dist_mm_2']
+    rtt_cols = ['Dist_mm_2']
     for col in rssi_cols:
         df[col] = df[col].replace(-100, np.nan)
     for col in rtt_cols:
@@ -344,7 +344,7 @@ def plot_cdf(errors_dict, filename='cdf_plot.png'):
 # 3. 主程式
 # ==========================================
 def main():
-    USE_MODE = 'fusion'
+    USE_MODE = 'rtt'
 
     seed_candidate = [42, 6767, 123456]
     source_acc = []
