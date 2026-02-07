@@ -51,7 +51,7 @@ elif args.mode == 'rssi':
 print(f"Model Input Dimension: {INPUT_DIM}")
 
 # 建立結果資料夾
-RESULT_DIR = "results_single_stream"
+RESULT_DIR = "results"
 CDF_DIR = os.path.join(RESULT_DIR, "cdf_data")
 os.makedirs(CDF_DIR, exist_ok=True)
 

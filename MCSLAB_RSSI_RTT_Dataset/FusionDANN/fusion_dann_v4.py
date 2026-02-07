@@ -36,7 +36,7 @@ RSSI_COLS = ['Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3',
 # 計算輸入維度
 RTT_INPUT_DIM = len(RTT_COLS)
 RSSI_INPUT_DIM = len(RSSI_COLS)
-COMBO_NAME = "Dual_FixedRSSI_" + "RTT_" + "_".join(rtt_indices)
+COMBO_NAME = "FusionDANN_" + "_".join(rtt_indices)
 
 print(f"==========================================")
 print(f"Experiment: {COMBO_NAME}")
@@ -45,7 +45,7 @@ print(f"RTT Features ({RTT_INPUT_DIM}): {RTT_COLS}")
 print(f"==========================================")
 
 # 建立結果資料夾
-RESULT_DIR = "results_dual"
+RESULT_DIR = "results"
 CDF_DIR = os.path.join(RESULT_DIR, "cdf_data")
 os.makedirs(CDF_DIR, exist_ok=True)
 
