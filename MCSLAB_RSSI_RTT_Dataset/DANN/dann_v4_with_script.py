@@ -283,7 +283,7 @@ def main():
         DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_28/All_Data_With_RSSI_Diff.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_1_2/All_Data_With_RSSI_Diff.csv')
 
         SAMPLES_PER_LABEL = 120
         

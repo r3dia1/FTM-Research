@@ -15,7 +15,7 @@ Experiment: DNN_Fusion_RTT_3_4
 Mode: fusion | Input Dim: 6
 Features: RSSI(4) + RTT(2)
 ==========================================
-Seed 42 | Best Epoch 385 | Tgt MDE: 1.3653m
-Seed 6767 | Best Epoch 259 | Tgt MDE: 1.2982m
-Seed 123456 | Best Epoch 383 | Tgt MDE: 1.5303m
+Seed 42 | Best Epoch 385 | Tgt MDE: 1.3618m
+Seed 6767 | Best Epoch 259 | Tgt MDE: 1.0897m
+Seed 123456 | Best Epoch 383 | Tgt MDE: 1.1509m
 Finished DNN_Fusion_RTT_3_4. Results saved.

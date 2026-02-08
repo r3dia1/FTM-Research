@@ -15,7 +15,7 @@ Experiment: DNN_Only_RTT_4
 Mode: rtt | Input Dim: 1
 Features: RTT
 ==========================================
-Seed 42 | Best Epoch 250 | Tgt MDE: 2.6153m
-Seed 6767 | Best Epoch 99 | Tgt MDE: 2.9505m
-Seed 123456 | Best Epoch 280 | Tgt MDE: 2.7638m
+Seed 42 | Best Epoch 250 | Tgt MDE: 2.6202m
+Seed 6767 | Best Epoch 99 | Tgt MDE: 2.7921m
+Seed 123456 | Best Epoch 280 | Tgt MDE: 2.8171m
 Finished DNN_Only_RTT_4. Results saved.

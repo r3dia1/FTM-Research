@@ -10,7 +10,7 @@ import re
 
 # 資料集根目錄 (預設為當前目錄)
 BASE_DIR = "." 
-OUTPUT_DIR = "final_comparison_plots"
+OUTPUT_DIR = "final_comparison_plots_2026_1_14"
 
 # 定義每個架構的路徑與顯示名稱
 # 格式: '資料夾名稱': {'subpath': '該架構下存放npy的路徑', 'label': '圖例顯示名稱', 'color': '指定顏色'}
@@ -87,7 +87,7 @@ def parse_filename(arch_name, filename):
 
     # --- 針對 FusionDANN (Dual) 的規則 ---
     elif arch_name == 'FusionDANN':
-        if "Dual_FixedRSSI_RTT" in name:
+        if "FusionDANN" in name:
             mode = "Fusion"
             rtt_part = name_no_seed.replace("error_FusionDANN_", "")
             rtt_list = rtt_part.split("_")
@@ -95,10 +95,14 @@ def parse_filename(arch_name, filename):
     # --- 針對 FusionCDAN 的規則 ---
     elif arch_name == 'FusionCDAN':
         # 格式: error_1_2_3_4_seed... (Implicit Fusion)
-        if name.startswith("error_") and "RTT" not in name:
+        if "FusionCDAN" in name:
             mode = "Fusion"
             rtt_part = name_no_seed.replace("error_FusionCDAN", "")
             rtt_list = rtt_part.split("_")
+        # if name.startswith("error_") and "RTT" not in name:
+        #     mode = "Fusion"
+        #     rtt_part = name_no_seed.replace("error_FusionCDAN", "")
+        #     rtt_list = rtt_part.split("_")
 
     # 計算 RTT 數量
     if rtt_list:

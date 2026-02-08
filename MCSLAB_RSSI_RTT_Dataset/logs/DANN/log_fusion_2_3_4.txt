@@ -13,9 +13,9 @@
 Mode: Fusion | Features: RSSI(4) + RTT(3)
 Model Input Dimension: 7
 Start Training Seed 42...
-Seed 42 | Src MDE: 0.0125 | Tgt MDE: 1.2115
+Seed 42 | Src MDE: 0.0179 | Tgt MDE: 1.0186
 Start Training Seed 6767...
-Seed 6767 | Src MDE: 0.0340 | Tgt MDE: 1.1444
+Seed 6767 | Src MDE: 0.0076 | Tgt MDE: 1.1072
 Start Training Seed 123456...
-Seed 123456 | Src MDE: 0.0088 | Tgt MDE: 1.1418
+Seed 123456 | Src MDE: 0.0201 | Tgt MDE: 0.9363
 Finished Combo Fusion_RTT_2_3_4. Results saved.
