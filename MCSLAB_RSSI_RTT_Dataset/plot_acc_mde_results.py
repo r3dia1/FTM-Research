@@ -128,7 +128,10 @@ def plot_with_legend(csv_file_path, output_dir='output_charts_legend'):
 
 if __name__ == "__main__":
     # 設定您的檔案路徑
-    csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_14.csv"] 
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_14.csv"] 
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_23.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_28.csv"]
+    csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_2_4.csv"]
 
     print(f"當前工作目錄: {os.getcwd()}")
     
