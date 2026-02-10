@@ -1,21 +1,33 @@
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py:233: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
 Mode: Fusion | Features: RSSI(4) + RTT(1)
 Model Input Dimension: 5
-Start Training Seed 42...
-Seed 42 | Src MDE: 0.0460 | Tgt MDE: 1.5081
-Start Training Seed 6767...
-Seed 6767 | Src MDE: 0.0763 | Tgt MDE: 1.6559
-Start Training Seed 123456...
-Seed 123456 | Src MDE: 0.0782 | Tgt MDE: 1.6633
-Finished Combo Fusion_RTT_3. Results saved.
+Traceback (most recent call last):
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 511, in <module>
+    main()
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 389, in main
+    t_rssi, t_rtt, t_labels = load_wifi_data(TARGET_CSV, is_source=False, samples_per_label=SAMPLES_PER_LABEL, rtt_cols_to_use=RTT_COLS)
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 233, in load_wifi_data
+    df = df.groupby('Label').apply(
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/groupby/groupby.py", line 1826, in apply
+    result = self._python_apply_general(f, self._selected_obj)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/groupby/groupby.py", line 1887, in _python_apply_general
+    values, mutated = self._grouper.apply_groupwise(f, data, self.axis)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/groupby/ops.py", line 928, in apply_groupwise
+    res = f(group)
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 234, in <lambda>
+    lambda x: x.sample(n=samples_per_label, replace=True) if len(x) < samples_per_label else x.sample(n=samples_per_label, replace=False)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/generic.py", line 6141, in sample
+    result = self.take(sampled_indices, axis=axis)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/generic.py", line 4155, in take
+    new_data = self._mgr.take(
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 913, in take
+    return self.reindex_indexer(
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 706, in reindex_indexer
+    new_blocks = [
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/internals/managers.py", line 711, in <listcomp>
+    fill_value if fill_value is not None else blk.fill_value
+  File "pandas/_libs/properties.pyx", line 36, in pandas._libs.properties.CachedProperty.__get__
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/pandas/core/internals/blocks.py", line 255, in fill_value
+    @final
+KeyboardInterrupt

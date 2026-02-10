@@ -1,21 +1,21 @@
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script.py:130: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DNN/dnn_baseline_script_fix.py:126: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
 ==========================================
 Experiment: DNN_Only_RTT_3_4
 Mode: rtt | Input Dim: 2
 Features: RTT
 ==========================================
-Seed 42 | Best Epoch 375 | Tgt MDE: 2.5876m
-Seed 6767 | Best Epoch 253 | Tgt MDE: 2.5331m
-Seed 123456 | Best Epoch 345 | Tgt MDE: 2.4786m
+Seed 42 | Best Epoch 5 | Tgt MDE: 2.3950m
+Seed 6767 | Best Epoch 5 | Tgt MDE: 2.3214m
+Seed 123456 | Best Epoch 4 | Tgt MDE: 2.3028m
 Finished DNN_Only_RTT_3_4. Results saved.

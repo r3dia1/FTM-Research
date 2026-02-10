@@ -3,7 +3,7 @@ import itertools
 
 # ORIGIN_PATH = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_1_1/all/Server_Wide_20260101_140347.csv'
 # TARGET_PATH = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_1_1/all/All_Data_With_RSSI_Diff.csv'
-ORIGIN_PATH = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_2_4/Server_Wide_20260204_112754.csv'
+ORIGIN_PATH = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_2_4/Server_Wide_20260204_123651.csv'
 TARGET_PATH = '/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/2026_2_4/All_Data_With_RSSI_Diff.csv'
 
 def process_differential_rssi(input_file, output_file):

@@ -1,21 +1,31 @@
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py:233: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
-  df = df.groupby('Label').apply(
-/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script.py:171: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py:233: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
   df = df.groupby('Label').apply(
 Mode: Fusion | Features: RSSI(4) + RTT(3)
 Model Input Dimension: 7
 Start Training Seed 42...
-Seed 42 | Src MDE: 0.0152 | Tgt MDE: 1.2744
-Start Training Seed 6767...
-Seed 6767 | Src MDE: 0.0229 | Tgt MDE: 1.0213
-Start Training Seed 123456...
-Seed 123456 | Src MDE: 0.0092 | Tgt MDE: 1.0640
-Finished Combo Fusion_RTT_2_3_4. Results saved.
+Traceback (most recent call last):
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 511, in <module>
+    main()
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 449, in main
+    class_out, d_out_s = model(s_data_b, alpha=alpha)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/DANN/dann_v4_with_script_fix.py", line 116, in forward
+    features = self.feature_extractor(x)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (32x9 and 7x32)
