@@ -124,6 +124,7 @@ class DualStreamDANN(nn.Module):
         # 2. 標籤預測 (Concatenate)
         f_cat = torch.cat((f_rssi, f_rtt), dim=1)
         class_output = self.class_classifier(f_cat)
+        softmax_output = F.softmax(class_output, dim=1)
 
         # 3. 域預測
         r_rssi = self.grl(f_rssi, alpha)
@@ -132,7 +133,7 @@ class DualStreamDANN(nn.Module):
         r_rtt = self.grl(f_rtt, alpha)
         domain_output_rtt = self.domain_classifier_rtt(r_rtt)
 
-        return class_output, domain_output_rssi, domain_output_rtt
+        return class_output, domain_output_rssi, domain_output_rtt, softmax_output
 
 # ==========================================
 # 資料處理
@@ -266,7 +267,7 @@ def create_coord_tensor(dataset_classes, device):
 #     avg_dom_rtt = total_dom_rtt / (num_batches * source_val_loader.batch_size * 2)
 #     return avg_cls, avg_dom_rssi, avg_dom_rtt
 
-def validate_process(model, source_val_loader, target_val_loader, device, coord_tensor):
+def validate_process(model, source_val_loader, target_val_loader, device):
     model.eval()
     total_cls_loss = 0.0
     total_correct_s = 0
@@ -280,7 +281,7 @@ def validate_process(model, source_val_loader, target_val_loader, device, coord_
         # Source Validation
         for s_rssi, s_rtt, s_label in source_val_loader:
             s_rssi, s_rtt, s_label = s_rssi.to(device), s_rtt.to(device), s_label.to(device)
-            class_out_s, _, _, _ = model(s_rssi, s_rtt, coord_tensor, alpha=0)
+            class_out_s, _, _, _ = model(s_rssi, s_rtt, alpha=0)
             
             # 計算 Source Accuracy (比 Loss 更直觀)
             preds = torch.argmax(class_out_s, dim=1)
@@ -290,7 +291,7 @@ def validate_process(model, source_val_loader, target_val_loader, device, coord_
         # Target Validation (只看 Entropy，不看 Domain Loss)
         for t_rssi, t_rtt, _ in target_val_loader:
             t_rssi, t_rtt = t_rssi.to(device), t_rtt.to(device)
-            _, _, _, softmax_t = model(t_rssi, t_rtt, coord_tensor, alpha=0)
+            _, _, _, softmax_t = model(t_rssi, t_rtt, alpha=0)
             
             # Entropy 計算: -sum(p * log(p))
             entropy = -torch.sum(softmax_t * torch.log(softmax_t + 1e-5), dim=1)
@@ -308,7 +309,7 @@ def evaluate_test(model, data_loader, coord_tensor, device, return_all_errors=Fa
     with torch.no_grad():
         for rssi, rtt, labels in data_loader:
             rssi, rtt, labels = rssi.to(device), rtt.to(device), labels.to(device)
-            class_out, _, _ = model(rssi, rtt, alpha=0)
+            class_out, _, _, _ = model(rssi, rtt, alpha=0)
             preds = torch.argmax(class_out, dim=1)
             correct += (preds == labels).sum().item()
             total += labels.size(0)
@@ -331,7 +332,7 @@ def main():
         
         # 設定路徑
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_14/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_LABEL = 120
         # Load Data
@@ -347,12 +348,13 @@ def main():
         t_train, t_val, t_test = stratified_split(full_target, t_labels, target_split_counts)
 
         BATCH_SIZE = 32
-        source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
-        target_train_loader = DataLoader(t_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
-        source_val_loader = DataLoader(s_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
-        target_val_loader = DataLoader(t_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
-        source_test_loader = DataLoader(s_test, batch_size=BATCH_SIZE, shuffle=False)
-        target_test_loader = DataLoader(t_test, batch_size=BATCH_SIZE, shuffle=False)
+        NUM_WORKERS = 0
+        source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        target_train_loader = DataLoader(t_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        source_val_loader = DataLoader(s_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        target_val_loader = DataLoader(t_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        source_test_loader = DataLoader(s_test, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
+        target_test_loader = DataLoader(t_test, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
 
         class_names = label_encoder.classes_
         COORD_TENSOR = create_coord_tensor(class_names, DEVICE)
@@ -364,7 +366,7 @@ def main():
         W_CLS = 1; W_DOM_RSSI = 1; W_DOM_RTT = 1    
         num_epochs = 400
         best_epoch = -1
-        best_adv_score = float('-inf')
+        best_score = float('-inf')
         
         WARMUP_EPOCHS = 10
         CLS_THRESHOLD = 0.5 
@@ -395,8 +397,8 @@ def main():
                 s_rssi, s_rtt, s_lbl = s_rssi.to(DEVICE), s_rtt.to(DEVICE), s_lbl.to(DEVICE)
                 t_rssi, t_rtt = t_rssi.to(DEVICE), t_rtt.to(DEVICE)
                 
-                cls_out, d_rssi_s, d_rtt_s = model(s_rssi, s_rtt, alpha=alpha)
-                _, d_rssi_t, d_rtt_t = model(t_rssi, t_rtt, alpha=alpha)
+                cls_out, d_rssi_s, d_rtt_s, _ = model(s_rssi, s_rtt, alpha=alpha)
+                _, d_rssi_t, d_rtt_t, _ = model(t_rssi, t_rtt, alpha=alpha)
                 
                 l_cls = F.cross_entropy(cls_out, s_lbl)
                 d_lbl_s = torch.zeros(s_rssi.size(0), dtype=torch.long).to(DEVICE)
@@ -425,6 +427,7 @@ def main():
             
             current_score = val_s_acc - (0.5 * val_t_entropy)
 
+            save_mark = ''
             if (epoch + 1) > WARMUP_EPOCHS:
                 if current_score > best_score:
                     best_score = current_score

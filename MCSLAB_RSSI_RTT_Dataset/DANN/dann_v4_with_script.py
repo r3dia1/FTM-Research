@@ -158,11 +158,12 @@ def load_wifi_data(csv_path, is_source=True, samples_per_label=None, rtt_cols_to
     if is_source:
         df[cols_to_fix] = df.groupby('Label')[cols_to_fix].transform(fill_with_mean)
     else:
-        for col in cols_to_fix:
-            if df[col].isnull().all():
-                df[col] = df[col].fillna(0)
-            else:
-                df[col] = df[col].fillna(df[col].mean())
+        pass
+        # for col in cols_to_fix:
+        #     if df[col].isnull().all():
+        #         df[col] = df[col].fillna(0)
+        #     else:
+        #         df[col] = df[col].fillna(df[col].mean())
 
     df[rssi_cols] = df[rssi_cols].fillna(-100)
     df[rtt_cols] = df[rtt_cols].fillna(-1)
@@ -283,7 +284,7 @@ def main():
         DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_2/All_Data_With_RSSI_Diff.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_1_14/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_LABEL = 120
         

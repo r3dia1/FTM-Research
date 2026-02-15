@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 設定 Python 腳本路徑
-PYTHON_SCRIPT="fusion_cdan_v3_fix.py"
+PYTHON_SCRIPT="fusion_cdan_v4.py"
 # 設定資料集的 Base Path (請修改為你的實際路徑)
 BASE_PATH=".." 
 

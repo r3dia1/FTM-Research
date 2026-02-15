@@ -1,0 +1,20 @@
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDANN/fusion_dann_v4_fix.py:181: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDANN/fusion_dann_v4_fix.py:181: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+==========================================
+Experiment: FusionDANN_1_3
+RSSI Features (6): Fixed
+RTT Features (2): ['Dist_mm_1', 'Dist_mm_3']
+==========================================
+Start Training Seed 42...
+
+Start Training... (Validate on Source Val & Target Val)
+Epoch  | Total Loss | Train Cls  | Train D_RSSI | Train D_RTT | Val S Acc  | Val T Entropy | Save        | Test MDE | Score  
+---------------------------------------------------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDANN/fusion_dann_v4_fix.py", line 475, in <module>
+    main()
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDANN/fusion_dann_v4_fix.py", line 424, in main
+    val_s_acc, val_t_entropy = validate_process(model, source_val_loader, target_val_loader, DEVICE)
+TypeError: validate_process() missing 1 required positional argument: 'coord_tensor'

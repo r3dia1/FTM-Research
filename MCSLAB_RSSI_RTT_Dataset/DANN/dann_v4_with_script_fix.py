@@ -380,7 +380,7 @@ def main():
         DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_14/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_LABEL = 120
         
@@ -408,12 +408,20 @@ def main():
         t_train, t_val, t_test = stratified_split(full_target, t_labels, target_split_counts)
 
         BATCH_SIZE = 32
-        source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
-        target_train_loader = DataLoader(t_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
-        source_val_loader = DataLoader(s_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
-        target_val_loader = DataLoader(t_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
-        source_test_loader = DataLoader(s_test, batch_size=BATCH_SIZE, shuffle=False)
-        target_test_loader = DataLoader(t_test, batch_size=BATCH_SIZE, shuffle=False)
+        # source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
+        # target_train_loader = DataLoader(t_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
+        # source_val_loader = DataLoader(s_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
+        # target_val_loader = DataLoader(t_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True)
+        # source_test_loader = DataLoader(s_test, batch_size=BATCH_SIZE, shuffle=False)
+        # target_test_loader = DataLoader(t_test, batch_size=BATCH_SIZE, shuffle=False)
+
+        NUM_WORKERS = 0
+        source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        target_train_loader = DataLoader(t_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        source_val_loader = DataLoader(s_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        target_val_loader = DataLoader(t_val, batch_size=BATCH_SIZE, shuffle=False, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        source_test_loader = DataLoader(s_test, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
+        target_test_loader = DataLoader(t_test, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
 
         class_names = label_encoder.classes_
         COORD_TENSOR = create_coord_tensor(class_names, DEVICE)

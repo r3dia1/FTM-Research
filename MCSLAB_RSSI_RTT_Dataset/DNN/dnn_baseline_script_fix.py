@@ -201,7 +201,7 @@ def main():
         # 設定資料路徑
         # 請確保這裡的路徑對應到您存放資料的結構，或從外部 args 傳入
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_14/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_CLASS = 120 # 根據需求調整
         
@@ -235,10 +235,11 @@ def main():
         source_test_dataset = TensorDataset(s_data, s_labels)
 
         BATCH_SIZE = 32
-        train_loader = DataLoader(source_train_ds, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
-        val_loader   = DataLoader(source_val_ds, batch_size=BATCH_SIZE, shuffle=False)
-        target_test_loader  = DataLoader(target_test_dataset, batch_size=BATCH_SIZE, shuffle=False)
-        source_test_loader  = DataLoader(source_test_dataset, batch_size=BATCH_SIZE, shuffle=False)
+        NUM_WORKERS = 0
+        train_loader = DataLoader(source_train_ds, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=NUM_WORKERS, pin_memory=True)
+        val_loader   = DataLoader(source_val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
+        target_test_loader  = DataLoader(target_test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
+        source_test_loader  = DataLoader(source_test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
 
         class_names = label_encoder.classes_
         COORD_TENSOR = create_coord_tensor(class_names, DEVICE)

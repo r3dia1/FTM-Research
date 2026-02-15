@@ -12,7 +12,7 @@ ARCHITECTURES=(
     "DANN/dann_v4_with_script_fix.py"
     "DNN/dnn_baseline_script_fix.py"
     "FusionDANN/fusion_dann_v4_fix.py"
-    "FusionCDAN/fusion_cdan_v3_fix.py"
+    "FusionCDAN/fusion_cdan_v3_fix_optimized.py"
 )
 
 # 定義 RTT 組合

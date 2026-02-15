@@ -488,7 +488,7 @@ def main():
         # 根據參數拼接路徑
         # 請確保資料夾路徑正確
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_14/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_1_28/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_LABEL = 120
         # 載入資料時傳入 RTT_COLS
@@ -519,7 +519,7 @@ def main():
         optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9, weight_decay=1e-4)
         domain_criterion = nn.BCEWithLogitsLoss(reduction='none')
 
-        num_epochs = 350
+        num_epochs = 400
         best_epoch = -1
         best_score = float('-inf')
         

@@ -1,0 +1,51 @@
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionCDAN/fusion_cdan_v3_fix_optimized.py:291: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionCDAN/fusion_cdan_v3_fix_optimized.py:291: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+==========================================
+Current Experiment: RTT Combination: ['Dist_mm_1', 'Dist_mm_2', 'Dist_mm_4']
+RTT Input Dimension: 3
+==========================================
+Start Training Seed 42...
+
+Start CDAN+E Training... (Entropy Conditioning Enabled)
+Epoch  | Total Loss | Tr Cls     | Tr Dom RSSI  | Tr Dom RTT   | Val T Acc  | Val T Entropy | Test MDE
+------------------------------------------------------------------------------------------------------------------------
+50     | 2.4988     | 0.4521     | 1.0428       | 1.0039       | 0.9927     | 0.9704       |           
+100    | 2.6106     | 0.4056     | 1.1050       | 1.1000       | 0.9938     | 0.7823       |           
+150    | 2.7215     | 0.3923     | 1.1789       | 1.1504       | 0.9938     | 0.5985       | (ADV 0.69)
+200    | 2.8170     | 0.3761     | 1.2247       | 1.2162       | 0.9823     | 0.5477       |           
+250    | 2.8331     | 0.3307     | 1.2548       | 1.2477       | 0.9865     | 0.4696       |           
+300    | 2.8747     | 0.3213     | 1.2910       | 1.2624       | 0.9906     | 0.4486       |           
+350    | 2.9121     | 0.3480     | 1.2884       | 1.2757       | 0.9896     | 0.4621       |           
+400    | 2.9053     | 0.2976     | 1.3046       | 1.3031       | 0.9885     | 0.4901       |           
+Seed 42 | Src Acc: 99.2857 | Src MDE: 0.0122 | Tgt Acc: 40.1020 | Tgt MDE: 0.8104
+Start Training Seed 6767...
+
+Start CDAN+E Training... (Entropy Conditioning Enabled)
+Epoch  | Total Loss | Tr Cls     | Tr Dom RSSI  | Tr Dom RTT   | Val T Acc  | Val T Entropy | Test MDE
+------------------------------------------------------------------------------------------------------------------------
+50     | 2.4015     | 0.4244     | 1.0138       | 0.9633       | 0.9885     | 0.9602       | (ADV 0.51)
+100    | 2.7520     | 0.4639     | 1.1349       | 1.1532       | 0.9906     | 0.6518       | (ADV 0.66)
+150    | 2.8056     | 0.4327     | 1.1959       | 1.1770       | 0.9781     | 0.5630       |           
+200    | 2.8455     | 0.3949     | 1.2201       | 1.2305       | 0.9844     | 0.5062       |           
+250    | 2.8394     | 0.3417     | 1.2516       | 1.2461       | 0.9885     | 0.4725       |           
+300    | 2.9571     | 0.3999     | 1.2894       | 1.2678       | 0.9885     | 0.4184       |           
+350    | 2.8640     | 0.3209     | 1.2814       | 1.2618       | 0.9885     | 0.4041       |           
+400    | 2.9167     | 0.3240     | 1.3019       | 1.2908       | 0.9938     | 0.4129       |           
+Seed 6767 | Src Acc: 98.5714 | Src MDE: 0.0231 | Tgt Acc: 38.0612 | Tgt MDE: 0.8492
+Start Training Seed 123456...
+
+Start CDAN+E Training... (Entropy Conditioning Enabled)
+Epoch  | Total Loss | Tr Cls     | Tr Dom RSSI  | Tr Dom RTT   | Val T Acc  | Val T Entropy | Test MDE
+------------------------------------------------------------------------------------------------------------------------
+50     | 2.4745     | 0.4637     | 1.0064       | 1.0044       | 0.9885     | 0.9877       | (ADV 0.49)
+100    | 2.7046     | 0.4421     | 1.1267       | 1.1358       | 0.9896     | 0.7070       | (ADV 0.64)
+150    | 2.8317     | 0.4332     | 1.1815       | 1.2170       | 0.9833     | 0.6058       | (ADV 0.68)
+200    | 2.8381     | 0.3859     | 1.2226       | 1.2296       | 0.9844     | 0.5340       |           
+250    | 2.8566     | 0.3438     | 1.2522       | 1.2606       | 0.9865     | 0.5065       |           
+300    | 2.8776     | 0.3325     | 1.2651       | 1.2801       | 0.9875     | 0.4512       |           
+350    | 2.9079     | 0.3278     | 1.2954       | 1.2848       | 0.9854     | 0.4665       |           
+400    | 2.9069     | 0.3069     | 1.2983       | 1.3017       | 0.9833     | 0.4011       |           
+Seed 123456 | Src Acc: 98.7755 | Src MDE: 0.0135 | Tgt Acc: 38.8776 | Tgt MDE: 0.8171
+Finished Combo FusionCDAN_1_2_4. Results saved.
