@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 
-def plot_with_legend(csv_file_path, output_dir='output_charts_legend'):
+def plot_with_legend(csv_file_path, output_dir='output_charts_legend(GACDAN)'):
     """
     V6 更新:
     1. 隱藏 X 軸過長的文字。
@@ -128,10 +128,18 @@ def plot_with_legend(csv_file_path, output_dir='output_charts_legend'):
 
 if __name__ == "__main__":
     # 設定您的檔案路徑
-    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_14.csv"] 
-    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_23.csv"]
-    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_28.csv"]
-    csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_2_4.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_14_with_dsbn.csv"] 
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_23_with_dsbn.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_1_28_with_dsbn.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/avg_result_2_4_with_dsbn.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/noRSSIDiff baseline/avg_result_1_14.csv"] 
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/noRSSIDiff baseline/avg_result_1_23.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/noRSSIDiff baseline/avg_result_1_28.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/noRSSIDiff baseline/avg_result_2_4.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_14.csv"] 
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_23.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_28.csv"]
+    csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_2_4.csv"]
 
     print(f"當前工作目錄: {os.getcwd()}")
     

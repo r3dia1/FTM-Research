@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PYTHON_SCRIPT="fusion_dann_v4_fix.py"
+PYTHON_SCRIPT="fusion_dann_v5.py"
 BASE_PATH=".."  # 請根據實際資料位置修改
 
 # 定義 RTT 組合

@@ -10,28 +10,28 @@ import re
 
 # 資料集根目錄 (預設為當前目錄)
 BASE_DIR = "." 
-OUTPUT_DIR = "final_comparison_plots_2026_2_4"
+OUTPUT_DIR = "final_comparison_plots_2026_1_14(2026/2/24)"
 
 # 定義每個架構的路徑與顯示名稱
 # 格式: '資料夾名稱': {'subpath': '該架構下存放npy的路徑', 'label': '圖例顯示名稱', 'color': '指定顏色'}
 ARCH_CONFIG = {
     'DNN': {
-        'subpath': 'results/cdf_data_2_4', 
+        'subpath': 'results/cdf_data_1_14', 
         'label': 'DNN', 
         'color': '#d62728' # 紅色
     },
     'DANN': {
-        'subpath': 'results/cdf_data_2_4', 
+        'subpath': 'results/dann_v5/cdf_data_1_14', 
         'label': 'DANN (Single)', 
         'color': '#1f77b4' # 藍色
     },
     'FusionDANN': {
-        'subpath': 'results/cdf_data_2_4', 
+        'subpath': 'results/fusion_dann_v5/cdf_data_1_14', 
         'label': 'Fusion DANN (Dual)', 
         'color': '#2ca02c' # 綠色
     },
     'FusionCDAN': {
-        'subpath': 'results/cdf_data_2_4',  # 請確認您的 CDAN 實際輸出路徑
+        'subpath': 'results/ga_cdan_no_mean_fill/cdf_data_1_14',  # 請確認您的 CDAN 實際輸出路徑
         'label': 'Fusion CDAN', 
         'color': '#9467bd' # 紫色
     }

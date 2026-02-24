@@ -9,10 +9,10 @@ BASE_PATH="/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset"
 
 # 定義所有架構列表 (根據您的實際路徑更新)
 ARCHITECTURES=(
-    "DANN/dann_v4_with_script.py"
+    # "DANN/dann_v4_with_script.py"
     # "DNN/dnn_baseline_script_fix.py"
-    "FusionDANN/fusion_dann_v4.py"
-    # "FusionCDAN/fusion_cdan_v3_fix_optimized.py"
+    # "FusionDANN/fusion_dann_v4_noRSSIDiff.py"
+    "FusionCDAN/ga_cdan_v6_no_mean_fill.py"
 )
 
 # 定義 RTT 組合

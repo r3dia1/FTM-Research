@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PYTHON_SCRIPT="dann_v4_with_script.py"
+# PYTHON_SCRIPT="dann_v4_with_script.py"
+PYTHON_SCRIPT="dann_v5.py"
 BASE_PATH=".."  # 請自行修改路徑
 
 # 定義 RTT 組合

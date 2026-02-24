@@ -1,0 +1,5 @@
+mcAP amounts,dnn acc,dnn mde,dnn acc(RTT only),dnn mde(RTT only),dann acc,dann mde,dann acc(RTT only),dann mde(RTT only),fusiondann acc,fusiondann mde,fusioncdan acc,fusioncdan mde, fusioncdan_dsbn acc, fusioncdan_dsbn mde
+1,27.38,1.2366,12.25,2.5268,27.66,1.2338,11.95,2.5161,27.92,1.1271,29.29,1.0561, 26.57, 1.1456
+2,31.71,1.0462,26.98,1.4011,31.51,1.0307,27.62,1.4136,32.10,0.9119,37.97,0.7740, 35.65, 0.8222
+3,33.60,0.8693,29.67,0.9162,33.40,0.8582,30.92,0.9094,36.45,0.7309,43.79,0.6109, 37.63, 0.6472
+4,34.88,0.7841,27.02,0.8615,34.35,0.7811,31.19,0.8423,38.44,0.6414,45.07,0.6090, 42.69, 0.5151
