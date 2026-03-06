@@ -340,7 +340,7 @@ def main():
     # 根據參數拼接路徑
     # 請確保資料夾路徑正確
     SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-    TARGET_CSV = os.path.join(args.base_path, '2026_1_23/All_Data_With_RSSI_Diff_withoutNA.csv')
+    TARGET_CSV = os.path.join(args.base_path, '2026_3_5/All_Data_With_RSSI_Diff_withoutNA.csv')
     
     for seed in seed_candidate:
         set_seed(seed)

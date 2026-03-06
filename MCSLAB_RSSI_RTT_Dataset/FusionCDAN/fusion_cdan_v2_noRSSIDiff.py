@@ -166,72 +166,80 @@ def set_seed(seed):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-def load_wifi_data(csv_path, is_source=True, samples_per_label=None, rtt_cols_to_use=None):
-    global is_scaler_fitted
+def load_raw_data(csv_path, rtt_cols_to_use=None):
+    """只負責讀取與基本清理，絕對不做 Scaling"""
     df = pd.read_csv(csv_path)
-    
-    # rssi_cols = ['Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3', 'Diff_RSSI_2_4', 'Diff_RSSI_3_4']
     rssi_cols = ['RSSI_1', 'RSSI_2', 'RSSI_3', 'RSSI_4'] 
-    # 使用動態傳入的 RTT columns
     rtt_cols = rtt_cols_to_use 
     
-    for col in rssi_cols:
-        df[col] = df[col].replace(-100, np.nan)
-    for col in rtt_cols:
-        df[col] = df[col].replace([0, -1], np.nan)
+    # 針對無效值處理
+    for col in rssi_cols: df[col] = df[col].replace(-100, np.nan)
+    for col in rtt_cols: df[col] = df[col].replace([0, -1], np.nan)
 
-    def fill_with_mean(x):
-        return x.fillna(x.mean())
-    
-    cols_to_fix = rssi_cols + rtt_cols
-    if is_source:
-        df[cols_to_fix] = df.groupby('Label')[cols_to_fix].transform(fill_with_mean)
-    else:
-        pass
-        # for col in cols_to_fix:
-        #     if df[col].isnull().all():
-        #         df[col] = df[col].fillna(0)
-        #     else:
-        #         df[col] = df[col].fillna(df[col].mean())
-    
-    df[rssi_cols] = df[rssi_cols].fillna(-100)
-    df[rtt_cols] = df[rtt_cols].fillna(-1)
-
-    if samples_per_label is not None:
-        df = df.groupby('Label').apply(
-            lambda x: x.sample(n=samples_per_label, replace=True) if len(x) < samples_per_label else x.sample(n=samples_per_label, replace=False)
-        ).reset_index(drop=True)
-
-    rssi_data = df[rssi_cols].values.astype(np.float32)
-    rtt_data = df[rtt_cols].values.astype(np.float32)
+    rssi_raw = df[rssi_cols].values.astype(np.float32)
+    rtt_raw = df[rtt_cols].values.astype(np.float32)
     raw_labels = df['Label'].values
+    
+    return rssi_raw, rtt_raw, raw_labels
 
-    if is_source:
-        rssi_data = rssi_scaler.fit_transform(rssi_data)
-        rtt_data = rtt_scaler.fit_transform(rtt_data)
-        labels = label_encoder.fit_transform(raw_labels)
-        is_scaler_fitted = True
-    else:
-        if not is_scaler_fitted: raise ValueError("Error: Scaler not fitted.")
-        rssi_data = rssi_scaler.transform(rssi_data)
-        rtt_data = rtt_scaler.transform(rtt_data)
-        try: labels = label_encoder.transform(raw_labels)
-        except: labels = np.zeros(len(df))
-    return torch.tensor(rssi_data), torch.tensor(rtt_data), torch.tensor(labels, dtype=torch.long)
-
-def stratified_split(dataset, labels, split_counts):
-    if isinstance(labels, torch.Tensor): labels = labels.cpu().numpy()
-    num_classes = len(np.unique(labels))
-    train_indices, val_indices, test_indices = [], [], []
+def get_stratified_indices(labels, split_counts):
+    """回傳 Train/Val/Test 的 Index，而不是 Dataset"""
+    train_idx, val_idx, test_idx = [], [], []
     unique_labels = np.unique(labels)
+    n_train, n_val, n_test = split_counts
     for label in unique_labels:
         label_indices = np.where(labels == label)[0]
         np.random.shuffle(label_indices)
-        n_train, n_val, n_test = split_counts
-        train_indices.extend(label_indices[:n_train])
-        val_indices.extend(label_indices[n_train : n_train + n_val])
-        test_indices.extend(label_indices[n_train + n_val : n_train + n_val + n_test])
-    return (Subset(dataset, train_indices), Subset(dataset, val_indices), Subset(dataset, test_indices))
+        train_idx.extend(label_indices[:n_train])
+        val_idx.extend(label_indices[n_train : n_train + n_val])
+        test_idx.extend(label_indices[n_train + n_val : n_train + n_val + n_test])
+    return train_idx, val_idx, test_idx
+
+def fill_nan_with_train_mean(train_data, val_data, test_data, train_labels, val_labels, test_labels, fallback_val):
+    """
+    嚴格使用 Train Set 的類別平均值來填補 Train/Val/Test 中的 NaN。
+    """
+    # 複製資料，避免改動到原始全域變數
+    t_data = np.copy(train_data)
+    v_data = np.copy(val_data)
+    te_data = np.copy(test_data)
+    
+    unique_labels = np.unique(train_labels)
+    
+    # 1. 計算 Global Mean (作為最後的備案：如果某個類別在 Train Set 裡某特徵全為 NaN)
+    with np.errstate(invalid='ignore'):
+        global_mean = np.nanmean(t_data, axis=0)
+    # 如果連 Global Mean 都是 NaN (整個特徵壞掉)，就用常數 (如 -100 或 -1)
+    global_mean = np.nan_to_num(global_mean, nan=fallback_val)
+    
+    # 2. 建立 Train Set 的類別平均值字典
+    class_means = {}
+    for label in unique_labels:
+        mask = (train_labels == label)
+        class_data = t_data[mask]
+        
+        with np.errstate(invalid='ignore'):
+            c_mean = np.nanmean(class_data, axis=0)
+        
+        # 針對該類別全為 NaN 的特徵，使用 Global Mean 補救
+        c_mean_nan_mask = np.isnan(c_mean)
+        c_mean[c_mean_nan_mask] = global_mean[c_mean_nan_mask]
+        class_means[label] = c_mean
+
+    # 3. 定義填補邏輯
+    def apply_imputation(data, labels):
+        for i in range(len(data)):
+            label = labels[i]
+            nan_mask = np.isnan(data[i])
+            if np.any(nan_mask): # 如果這筆資料有缺值
+                # 取得該類別的平均值 (若遇到 Train 沒看過的奇葩 Label，用 Global Mean)
+                fill_values = class_means.get(label, global_mean)
+                data[i][nan_mask] = fill_values[nan_mask]
+        return data
+
+    return apply_imputation(t_data, train_labels), \
+           apply_imputation(v_data, val_labels), \
+           apply_imputation(te_data, test_labels)
 
 # 坐標 Label Mapping (省略內容，請保持原樣)
 LABEL_TO_COORDS = {
@@ -327,18 +335,78 @@ def main():
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
         TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff.csv')
 
-        SAMPLES_PER_LABEL = 120
-        # 載入資料時傳入 RTT_COLS
-        s_rssi, s_rtt, s_labels = load_wifi_data(SOURCE_CSV, is_source=True, samples_per_label=SAMPLES_PER_LABEL, rtt_cols_to_use=RTT_COLS)
-        t_rssi, t_rtt, t_labels = load_wifi_data(TARGET_CSV, is_source=False, samples_per_label=SAMPLES_PER_LABEL, rtt_cols_to_use=RTT_COLS)
-
-        full_source = TensorDataset(s_rssi, s_rtt, s_labels)
-        full_target = TensorDataset(t_rssi, t_rtt, t_labels)
+        # === 替換 main() 內的資料載入段落 ===
+        s_rssi_raw, s_rtt_raw, s_labels_raw = load_raw_data(SOURCE_CSV, rtt_cols_to_use=RTT_COLS)
+        t_rssi_raw, t_rtt_raw, t_labels_raw = load_raw_data(TARGET_CSV, rtt_cols_to_use=RTT_COLS)
         
+        # 1. 取得切割索引
         source_split_counts = [80, 20, 20] 
         target_split_counts = [80, 20, 20]
-        s_train, s_val, s_test = stratified_split(full_source, s_labels, source_split_counts)
-        t_train, t_val, t_test = stratified_split(full_target, t_labels, target_split_counts)
+        s_tr_idx, s_val_idx, s_test_idx = get_stratified_indices(s_labels_raw, source_split_counts)
+        t_tr_idx, t_val_idx, t_test_idx = get_stratified_indices(t_labels_raw, target_split_counts)
+
+        # ---------------------------------------------------------
+        # 新增：2. 執行安全的類別平均值填補 (Source 與 Target 分開做)
+        # ---------------------------------------------------------
+        # 處理 Source RSSI (常數備案為 -100)
+        s_rssi_train, s_rssi_val, s_rssi_test = fill_nan_with_train_mean(
+            s_rssi_raw[s_tr_idx], s_rssi_raw[s_val_idx], s_rssi_raw[s_test_idx],
+            s_labels_raw[s_tr_idx], s_labels_raw[s_val_idx], s_labels_raw[s_test_idx], fallback_val=-100.0)
+        
+        # 處理 Source RTT (常數備案為 -1)
+        s_rtt_train, s_rtt_val, s_rtt_test = fill_nan_with_train_mean(
+            s_rtt_raw[s_tr_idx], s_rtt_raw[s_val_idx], s_rtt_raw[s_test_idx],
+            s_labels_raw[s_tr_idx], s_labels_raw[s_val_idx], s_labels_raw[s_test_idx], fallback_val=-1.0)
+
+        # t_rssi_train = t_rssi_raw[t_tr_idx]
+        # t_rssi_val   = t_rssi_raw[t_val_idx]
+        # t_rssi_test  = t_rssi_raw[t_test_idx]
+
+        # t_rtt_train  = t_rtt_raw[t_tr_idx]
+        # t_rtt_val    = t_rtt_raw[t_val_idx]
+        # t_rtt_test   = t_rtt_raw[t_test_idx]
+
+        # 處理 Target RSSI
+        t_rssi_train, t_rssi_val, t_rssi_test = fill_nan_with_train_mean(
+            t_rssi_raw[t_tr_idx], t_rssi_raw[t_val_idx], t_rssi_raw[t_test_idx],
+            t_labels_raw[t_tr_idx], t_labels_raw[t_val_idx], t_labels_raw[t_test_idx], fallback_val=-100.0)
+
+        # 處理 Target RTT
+        t_rtt_train, t_rtt_val, t_rtt_test = fill_nan_with_train_mean(
+            t_rtt_raw[t_tr_idx], t_rtt_raw[t_val_idx], t_rtt_raw[t_test_idx],
+            t_labels_raw[t_tr_idx], t_labels_raw[t_val_idx], t_labels_raw[t_test_idx], fallback_val=-1.0)
+        # ---------------------------------------------------------
+        
+        # 初始化 Scaler 與 LabelEncoder
+        rssi_scaler = MinMaxScaler(feature_range=(-1, 1))
+        rtt_scaler = MinMaxScaler(feature_range=(-1, 1))
+        label_encoder = LabelEncoder()
+
+        # 針對 s_labels_raw[s_tr_idx] 進行 fit 的做法
+        label_encoder.fit(s_labels_raw[s_tr_idx])
+
+        # 只有 Source Train 參與 fit !
+        rssi_scaler.fit(s_rssi_train)
+        rtt_scaler.fit(s_rtt_train)
+
+        def create_dataset(rssi_split, rtt_split, labels_split):
+            r_t = rssi_scaler.transform(rssi_split)
+            rt_t = rtt_scaler.transform(rtt_split)
+            # 保留原有的容錯機制
+            try: 
+                l_t = label_encoder.transform(labels_split)
+            except: 
+                l_t = np.zeros(len(labels_split))
+            return TensorDataset(torch.tensor(r_t), torch.tensor(rt_t), torch.tensor(l_t, dtype=torch.long))
+
+        s_train = create_dataset(s_rssi_train, s_rtt_train, s_labels_raw[s_tr_idx])
+        s_val   = create_dataset(s_rssi_val, s_rtt_val, s_labels_raw[s_val_idx])
+        s_test  = create_dataset(s_rssi_test, s_rtt_test, s_labels_raw[s_test_idx])
+        
+        t_train = create_dataset(t_rssi_train, t_rtt_train, t_labels_raw[t_tr_idx])
+        t_val   = create_dataset(t_rssi_val, t_rtt_val, t_labels_raw[t_val_idx])
+        t_test  = create_dataset(t_rssi_test, t_rtt_test, t_labels_raw[t_test_idx])
+        # ====================================
 
         BATCH_SIZE = 32
         source_loader = DataLoader(s_train, batch_size=BATCH_SIZE, shuffle=True, drop_last=True)
