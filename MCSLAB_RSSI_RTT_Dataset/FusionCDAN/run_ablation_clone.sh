@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # 設定 Python 腳本路徑
-PYTHON_SCRIPT="ga_cdan_v6_no_mean_fill.py"
+PYTHON_SCRIPT="ga_cdan_v7.py"
+# PYTHON_SCRIPT="fusion_cdan_v2_noRSSIDiff.py"
 # 設定資料集的 Base Path (請修改為你的實際路徑)
 BASE_PATH=".." 
 

@@ -9,16 +9,16 @@ BASE_PATH="/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset"
 
 # 定義所有架構列表 (根據您的實際路徑更新)
 ARCHITECTURES=(
-    "DANN/dann_v5.py"
-    "DNN/dnn_baseline_script_fix.py"
-    "FusionDANN/fusion_dann_v5.py"
-    "FusionCDAN/ga_cdan_v6_no_mean_fill.py"
+    # "DANN/dann_v5.py"
+    # "DNN/dnn_baseline_script_fix.py"
+    # "FusionDANN/fusion_dann_v5.py"
+    "FusionCDAN/ga_cdan.py"
 )
 
 # 定義 RTT 組合
-c1=("1" "2" "3" "4")
-c2=("1 2" "1 3" "1 4" "2 3" "2 4" "3 4")
-c3=("1 2 3" "1 2 4" "1 3 4" "2 3 4")
+# c1=("1" "2" "3" "4")
+# c2=("1 2" "1 3" "1 4" "2 3" "2 4" "3 4")
+# c3=("1 2 3" "1 2 4" "1 3 4" "2 3 4")
 c4=("1 2 3 4")
 all_combos=("${c1[@]}" "${c2[@]}" "${c3[@]}" "${c4[@]}")
 

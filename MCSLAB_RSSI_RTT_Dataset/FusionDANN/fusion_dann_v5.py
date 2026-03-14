@@ -2,6 +2,8 @@
 # 修改自 version 4 fix
 # 原本的 load_wifi_data 在做 fit transform 的時候
 # 沒有區隔 train/val/test，現已修正
+# target_split_counts = [80, 20, 20]
+# target_split_counts = [40, 20, 20] (now)
 # ================================================================
 
 import torch
@@ -315,7 +317,7 @@ def main():
         
         # 設定路徑
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_23/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_LABEL = 120
         # Load Data
@@ -324,7 +326,7 @@ def main():
         
         # 1. 取得切割索引
         source_split_counts = [80, 20, 20] 
-        target_split_counts = [80, 20, 20]
+        target_split_counts = [40, 20, 20]
         s_tr_idx, s_val_idx, s_test_idx = get_stratified_indices(s_labels_raw, source_split_counts)
         t_tr_idx, t_val_idx, t_test_idx = get_stratified_indices(t_labels_raw, target_split_counts)
 

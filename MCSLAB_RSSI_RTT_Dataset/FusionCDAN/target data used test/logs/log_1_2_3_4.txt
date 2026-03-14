@@ -1,0 +1,12 @@
+==========================================
+Current Experiment: RTT Combination: ['Dist_mm_1', 'Dist_mm_2', 'Dist_mm_3', 'Dist_mm_4']
+RTT Input Dimension: 4
+Future Domain Test: ENABLED (../../2026_3_5/All_Data_With_RSSI_Diff_withoutNA.csv)
+==========================================
+Start Training Seed 42...
+Seed 42 | Src Acc: 98.8776 | Src MDE: 0.0222 | Tgt Acc: 52.1429 | Tgt MDE: 0.4241 | Fut Acc: 33.6710 | Fut MDE: 0.8475
+Start Training Seed 67...
+Seed 67 | Src Acc: 98.8776 | Src MDE: 0.0175 | Tgt Acc: 46.7347 | Tgt MDE: 0.5404 | Fut Acc: 40.0041 | Fut MDE: 0.7587
+Start Training Seed 1024...
+Seed 1024 | Src Acc: 97.9592 | Src MDE: 0.0306 | Tgt Acc: 49.7959 | Tgt MDE: 0.5184 | Fut Acc: 32.7808 | Fut MDE: 0.7925
+Finished Combo FusionCDAN_1_2_3_4. Results saved.

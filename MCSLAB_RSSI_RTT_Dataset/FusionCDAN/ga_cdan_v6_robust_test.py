@@ -2,6 +2,8 @@
 # 修改自 version 3 fix optimized
 # 1. 修正 load_wifi_data(): 改進資料洩漏問題
 # 2. 新增 Future Domain 測試，驗證時間漂移對抗能力
+# target_split_counts = [80, 20, 20]
+# target_split_counts = [40, 20, 20] (now)
 # ================================================================
 
 import torch
@@ -289,7 +291,7 @@ def distance_weighted_ce(logits, targets, coord_tensor, alpha_dist=0.1):
 # ==========================================
 def main():
     results = []
-    seed_candidate = [42, 6767, 123456]
+    seed_candidate = [42, 67, 1024]
 
     SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
     TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
@@ -311,7 +313,7 @@ def main():
         
         # 1. 取得切割索引
         source_split_counts = [80, 20, 20] 
-        target_split_counts = [80, 20, 20]
+        target_split_counts = [40, 20, 20]
         s_tr_idx, s_val_idx, s_test_idx = get_stratified_indices(s_labels_raw, source_split_counts)
         t_tr_idx, t_val_idx, t_test_idx = get_stratified_indices(t_labels_raw, target_split_counts)
 

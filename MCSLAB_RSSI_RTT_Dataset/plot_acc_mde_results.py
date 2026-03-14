@@ -139,7 +139,7 @@ if __name__ == "__main__":
     # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_14.csv"] 
     # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_23.csv"]
     # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_28.csv"]
-    csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_2_4.csv"]
+    csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/avg_result_1_2.csv"]
 
     print(f"當前工作目錄: {os.getcwd()}")
     

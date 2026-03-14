@@ -1,5 +1,7 @@
 # ===================== Version Info =============================
 # 根據 version 4 FIX 的版本做 MinMaxScaler 的修正(改善資料洩漏)
+# target_split_counts = [80, 20, 20]
+# target_split_counts = [40, 20, 20] (now)
 # ================================================================
 
 import torch
@@ -249,7 +251,7 @@ def main():
         DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_1_23/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
         
         # 讀取 Raw Data
         s_rssi_raw, s_rtt_raw, s_labels_raw = load_raw_data(SOURCE_CSV, rtt_cols_to_use=RTT_COLS)
@@ -257,7 +259,7 @@ def main():
 
         # 1. 取得切割索引
         source_split_counts = [80, 20, 20] 
-        target_split_counts = [80, 20, 20]
+        target_split_counts = [40, 20, 20]
         s_tr_idx, s_val_idx, s_test_idx = get_stratified_indices(s_labels_raw, source_split_counts)
         t_tr_idx, t_val_idx, t_test_idx = get_stratified_indices(t_labels_raw, target_split_counts)
 
