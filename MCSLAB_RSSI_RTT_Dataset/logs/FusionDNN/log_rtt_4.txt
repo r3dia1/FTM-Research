@@ -1,0 +1,32 @@
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionDNN/fusion_dnn_virtual_rtt_test2.py:142: FutureWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  df = df.groupby('Label').apply(
+==========================================
+Experiment: FusionDNN_PCN_Only_RTT_4
+Mode: rtt | mc_idx: [3] | Fusion Input RTT Dim: 4
+==========================================
+>> Training PCN on Source Domain...
+>> Source PCN Training Finished. Huber Loss: 0.0034
+>> Training PCN on Source+Target Domain...
+>> Source+Target PCN Training Finished. Huber Loss: 0.0051
+Seed 42 | Best Epoch 292 | Tgt MDE: 2.2245m
+>> Training PCN on Source Domain...
+>> Source PCN Training Finished. Huber Loss: 0.0035
+>> Training PCN on Source+Target Domain...
+>> Source+Target PCN Training Finished. Huber Loss: 0.0053
+Seed 6767 | Best Epoch 356 | Tgt MDE: 1.9696m
+>> Training PCN on Source Domain...
+>> Source PCN Training Finished. Huber Loss: 0.0033
+>> Training PCN on Source+Target Domain...
+>> Source+Target PCN Training Finished. Huber Loss: 0.0052
+Seed 123456 | Best Epoch 390 | Tgt MDE: 1.9378m
+Finished Combo FusionDNN_PCN_Only_RTT_4. Results saved.

@@ -29,9 +29,11 @@ LABEL_TO_COORDS = {
 
 # 設定兩個不同日期的完整檔案路徑
 FILE_BASE = './all/All_Data_With_RSSI_Diff_withoutNA.csv'
-FILE_COMP = '../2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv'
+# FILE_COMP = '../2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv'
+FILE_COMP = '../2026_3_17/All_Data_With_RSSI_Diff_withoutNA.csv'
 source_date = '2026/1/1'
-target_date = '2026/2/4'
+# target_date = '2026/2/4'
+target_date = '2026/3/17'
 
 # 定義要比較的 4 個 AP 及其名稱
 TARGET_APS = {

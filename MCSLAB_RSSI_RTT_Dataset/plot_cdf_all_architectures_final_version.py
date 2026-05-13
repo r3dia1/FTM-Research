@@ -11,12 +11,12 @@ import re
 # 資料集根目錄 (預設為當前目錄)
 BASE_DIR = "." 
 OUTPUT_DIR = "final_comparison_plots_2026_2_4(final version)"
-
+# OUTPUT_DIR = "final_comparison_plots_2026_3_17(final version)"
 
 # 需求 1: 指定的顏色順序
 COLORS = [
     '#4C72B0', '#DD8452', '#55A868', '#C44E52', '#8172B3', 
-    '#937860', '#DA8BC3', '#8C8C8C', '#CCB974', '#64B5CD'
+    '#64B5CD', '#DA8BC3', '#8C8C8C', '#CCB974', '#937860'
 ]
 
 # 需求 3: 擴充的架構與對應設定
@@ -27,37 +27,85 @@ ARCH_CONFIG = {
         'label': 'DNN', 
         'color': COLORS[0]
     },
+    'FusionDNN': {
+        'subpath': 'FusionDNN/results/cdf_data_2_4', 
+        'label': 'FusionDNN', 
+        'color': COLORS[1]
+    },
     'DANN': {
         'subpath': 'DANN/results/dann_v5/cdf_data_2_4(s:t 1:0.5)', 
         'label': 'DANN', 
-        'color': COLORS[1]
+        'color': COLORS[2]
     },
     'FusionDANN': {
         'subpath': 'FusionDANN/results/fusion_dann_v5/cdf_data_2_4 (s:t 1:0.5)', 
         'label': 'FusionDANN', 
-        'color': COLORS[2]
-    },
-    'CDAN': {
-        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5)/CDAN/results/cdf_data',  # 請調整路徑
-        'label': 'CDAN', 
         'color': COLORS[3]
     },
-    'FusionCDAN': {
-        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5)/FusionCDAN/results/cdf_data(64)',  # 請調整路徑
-        'label': 'FusionCDAN', 
+    'CDAN': {
+        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5) 2-4/CDAN/results/cdf_data',  # 請調整路徑
+        'label': 'CDAN', 
         'color': COLORS[4]
+    },
+    'FusionCDAN': {
+        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5) 2-4/FusionCDAN/results/cdf_data(64)',  # 請調整路徑
+        'label': 'FusionCDAN', 
+        'color': COLORS[5]
     },
     'DAFI': {
         'subpath': 'DAFI/results/cdf_data_2_4(1:0.5)',  # 請調整路徑
         'label': 'DAFI', 
-        'color': COLORS[5]
+        'color': COLORS[6]
     },
     'GACDAN': {
-        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5)/GACDAN/results/cdf_data',  # 請調整路徑
-        'label': 'GA-CDAN', 
-        'color': COLORS[6]
+        'subpath': 'FusionCDAN/ablation test(s:t=1:0.5) 2-4/GACDAN/results/cdf_data',  # 請調整路徑
+        'label': 'DuGDA', 
+        'color': COLORS[7]
     }
 }
+
+# ARCH_CONFIG = {
+#     'DNN': {
+#         'subpath': 'DNN/results/cdf_data_3_17', 
+#         'label': 'DNN', 
+#         'color': COLORS[0]
+#     },
+#     'FusionDNN': {
+#         'subpath': 'FusionDNN/results/cdf_data_3_17', 
+#         'label': 'FusionDNN', 
+#         'color': COLORS[1]
+#     },
+#     'DANN': {
+#         'subpath': 'DANN/results/dann_v5/cdf_data_3_17', 
+#         'label': 'DANN', 
+#         'color': COLORS[2]
+#     },
+#     'FusionDANN': {
+#         'subpath': 'FusionDANN/results/fusion_dann_v5/cdf_data_3_17', 
+#         'label': 'FusionDANN', 
+#         'color': COLORS[3]
+#     },
+#     'CDAN': {
+#         'subpath': 'CDAN/results/cdf_data_3_17',  # 請調整路徑
+#         'label': 'CDAN', 
+#         'color': COLORS[4]
+#     },
+#     'FusionCDAN': {
+#         'subpath': 'FusionCDAN final/results/cdf_data_3_17',  # 請調整路徑
+#         'label': 'FusionCDAN', 
+#         'color': COLORS[5]
+#     },
+#     'DAFI': {
+#         'subpath': 'DAFI/results/cdf_data_3_17',  # 請調整路徑
+#         'label': 'DAFI', 
+#         'color': COLORS[6]
+#     },
+#     'GACDAN': {
+#         'subpath': 'GACDAN/results/cdf_data_3_17',  # 請調整路徑
+#         'label': 'GA-CDAN', 
+#         'color': COLORS[7]
+#     }
+# }
 
 # ==========================================
 # 2. 檔名解析邏輯 (核心優化)

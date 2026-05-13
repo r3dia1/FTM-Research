@@ -11,8 +11,8 @@ file_path_old = './all/All_Data_With_RSSI_Diff_withoutNA.csv'
 date_old = "2026-01-01"
 
 # 比較日檔案 (較晚的時間)
-file_path_new = '../2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv'
-date_new = "2026-02-04"
+file_path_new = '../2026_3_17/All_Data_With_RSSI_Diff_withoutNA.csv'
+date_new = "2026-03-17"
 
 # 設定輸出資料夾
 output_dir = "drift_analysis_by_date"
@@ -60,7 +60,7 @@ plt.figure(figsize=(12, 8))
 
 # 繪製散點 (Alpha 設低一點可以看到重疊密度)
 sns.scatterplot(data=df_combined, x='RSSI_1', y='Dist_mm_1', hue='Date', 
-                palette={'2026-01-01': 'steelblue', '2026-02-04': 'darkorange'},
+                palette={'2026-01-01': 'steelblue', '2026-03-17': 'darkorange'},
                 alpha=0.2, s=20)
 
 # 加入趨勢線
@@ -76,9 +76,11 @@ plt.legend(title="Testing Date")
 plt.grid(True, linestyle='--', alpha=0.5)
 
 # 儲存圖片
-save_path = os.path.join(output_dir, "date_correlation_drift.png")
-plt.savefig(save_path, dpi=300)
-print(f"漂移分析圖表已儲存至: {save_path}")
+save_path_png = os.path.join(output_dir, "date_correlation_drift.png")
+save_path_pdf = os.path.join(output_dir, "date_correlation_drift.pdf")
+plt.savefig(save_path_png, dpi=1000, bbox_inches='tight')
+plt.savefig(save_path_pdf, format='pdf', bbox_inches='tight')
+print(f"漂移分析圖表已儲存至: {save_path_png} & {save_path_pdf}")
 plt.show()
 
 # ==========================================

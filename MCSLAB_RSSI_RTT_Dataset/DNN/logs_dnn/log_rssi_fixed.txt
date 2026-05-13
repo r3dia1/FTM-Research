@@ -1,0 +1,12 @@
+==========================================
+Experiment: DNN_Only_RSSI_Fixed
+Mode: rssi | Input Dim: 4
+Features: RSSI
+==========================================
+train size = 4704, val size = 1176
+Seed 42 | Best Epoch 285 | Tgt MDE: 1.4899m
+train size = 4704, val size = 1176
+Seed 6767 | Best Epoch 381 | Tgt MDE: 1.4970m
+train size = 4704, val size = 1176
+Seed 123456 | Best Epoch 346 | Tgt MDE: 1.5680m
+Finished DNN_Only_RSSI_Fixed. Results saved.

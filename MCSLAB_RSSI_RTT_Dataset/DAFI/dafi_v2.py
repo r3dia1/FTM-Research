@@ -340,7 +340,9 @@ def main():
 
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
         TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
-        
+        # TARGET_CSV = os.path.join(args.base_path, '2026_3_17/All_Data_With_RSSI_Diff_withoutNA.csv')
+        # TARGET_CSV = os.path.join(args.base_path, '2026_4_1/All_Data_With_RSSI_Diff_withoutNA.csv')
+
         # 讀取 Raw Data
         s_rssi_raw, s_rtt_raw, s_labels_raw = load_raw_data(SOURCE_CSV, rtt_cols_to_use=RTT_COLS)
         t_rssi_raw, t_rtt_raw, t_labels_raw = load_raw_data(TARGET_CSV, rtt_cols_to_use=RTT_COLS)
@@ -502,12 +504,16 @@ def main():
         # 儲存 CDF 用的 Error Array
         np.save(os.path.join(CDF_DIR, f"error_{COMBO_NAME}_seed{seed}.npy"), t_err)
 
-    # 寫入 Summary
+    # 計算平均並寫入 Summary CSV
     df_res = pd.DataFrame(results)
     avg_s_acc = df_res['Source_Acc'].mean()
+    avg_s_acc_std = df_res['Source_Acc'].std()
     avg_s_mde = df_res['Source_MDE'].mean()
+    avg_s_mde_std = df_res['Source_MDE'].std()
     avg_t_acc = df_res['Target_Acc'].mean()
+    avg_t_acc_std = df_res['Target_Acc'].std()
     avg_t_mde = df_res['Target_MDE'].mean()
+    avg_t_mde_std = df_res['Target_MDE'].std()
     
     summary_file = os.path.join(RESULT_DIR, "experiment_summary.csv")
     file_exists = os.path.isfile(summary_file)
@@ -515,8 +521,8 @@ def main():
     with open(summary_file, mode='a', newline='') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["Combo", "Avg_Src_Acc", "Avg_Src_MDE", "Avg_Tgt_Acc", "Avg_Tgt_MDE", "Seeds_Detail"])
-        writer.writerow([COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_mde:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_mde:.4f}", str(seed_candidate)])
+            writer.writerow(["Combo", "Avg_Src_Acc", "Avg_Src_Acc_STD", "Avg_Src_MDE", "Avg_Src_MDE_STD", "Avg_Tgt_Acc", "Avg_Tgt_Acc_STD", "Avg_Tgt_MDE", "Avg_Tgt_MDE_STD", "Seeds_Detail"])
+        writer.writerow([COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_acc_std:.4f}", f"{avg_s_mde:.4f}", f"{avg_s_mde_std:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_acc_std:.4f}", f"{avg_t_mde:.4f}", f"{avg_t_mde_std:.4f}", str(seed_candidate)])
         
     print(f"Finished Combo {COMBO_NAME}. Results saved.")
 

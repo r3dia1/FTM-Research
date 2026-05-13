@@ -1,0 +1,4 @@
+Combo,Avg_Src_Acc,Avg_Src_MDE,Avg_Tgt_Acc,Avg_Tgt_MDE,Seeds_Detail
+FusionCDAN_rssi_diff_1_2_3_4,99.1837,0.0117,30.0340,0.9042,"[67, 423, 123456]"
+FusionCDAN_rssi_diff_1_2_3_4,99.2517,0.0113,33.9796,0.8498,"[67, 423, 123456]"
+FusionCDAN_rssi_diff_1_2_3_4,99.2517,0.0589,0.0113,0.0028,33.9796,4.8670,0.8498,0.0335,"[67, 423, 123456]"

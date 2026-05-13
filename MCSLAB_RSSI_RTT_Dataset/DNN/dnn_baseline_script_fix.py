@@ -24,7 +24,8 @@ args = parser.parse_args()
 # 解析 Columns
 rtt_indices = args.rtt_indices.strip().split()
 RTT_COLS = [f'Dist_mm_{i}' for i in rtt_indices]
-RSSI_COLS = ['RSSI_1', 'RSSI_2', 'RSSI_3', 'RSSI_4'] 
+# RSSI_COLS = ['RSSI_1', 'RSSI_2', 'RSSI_3', 'RSSI_4'] 
+RSSI_COLS = ['Diff_RSSI_1_2', 'Diff_RSSI_1_3', 'Diff_RSSI_1_4', 'Diff_RSSI_2_3', 'Diff_RSSI_2_4', 'Diff_RSSI_3_4']
 
 # [核心修改] 根據模式決定 INPUT_DIM 與 COMBO_NAME
 if args.mode == 'fusion':
@@ -201,7 +202,8 @@ def main():
         # 設定資料路徑
         # 請確保這裡的路徑對應到您存放資料的結構，或從外部 args 傳入
         SOURCE_CSV = os.path.join(args.base_path, '2026_1_1/all/All_Data_With_RSSI_Diff.csv')
-        TARGET_CSV = os.path.join(args.base_path, '2026_2_4/All_Data_With_RSSI_Diff_withoutNA.csv')
+        # TARGET_CSV = os.path.join(args.base_path, '2026_3_17/All_Data_With_RSSI_Diff_withoutNA.csv')
+        TARGET_CSV = os.path.join(args.base_path, '2026_4_1/All_Data_With_RSSI_Diff_withoutNA.csv')
 
         SAMPLES_PER_CLASS = 120 # 根據需求調整
         
@@ -222,8 +224,8 @@ def main():
 
         # Source Split (Train/Val)
         full_source_dataset = TensorDataset(s_data, s_labels)
-        # train_size = int(0.8 * len(full_source_dataset))
-        train_size = 3902
+        train_size = int(0.8 * len(full_source_dataset))
+        # train_size = 3902
         val_size = len(full_source_dataset) - train_size
         print(f"train size = {train_size}, val size = {val_size}")
         source_train_ds, source_val_ds = random_split(
@@ -295,22 +297,27 @@ def main():
         # 儲存 CDF Error Data
         np.save(os.path.join(CDF_DIR, f"error_{COMBO_NAME}_seed{seed}.npy"), t_err)
 
-    # Summary
+    # 計算平均並寫入 Summary CSV
     df_res = pd.DataFrame(results)
     avg_s_acc = df_res['Source_Acc'].mean()
+    avg_s_acc_std = df_res['Source_Acc'].std()
     avg_s_mde = df_res['Source_MDE'].mean()
+    avg_s_mde_std = df_res['Source_MDE'].std()
     avg_t_acc = df_res['Target_Acc'].mean()
+    avg_t_acc_std = df_res['Target_Acc'].std()
     avg_t_mde = df_res['Target_MDE'].mean()
+    avg_t_mde_std = df_res['Target_MDE'].std()
     
-    summary_file = os.path.join(RESULT_DIR, "dnn_experiment_summary.csv")
+    summary_file = os.path.join(RESULT_DIR, "experiment_summary.csv")
     file_exists = os.path.isfile(summary_file)
+    
     with open(summary_file, mode='a', newline='') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["Combo", "Avg_Src_Acc", "Avg_Src_MDE", "Avg_Tgt_Acc", "Avg_Tgt_MDE", "Seeds_Detail"])
-        writer.writerow([COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_mde:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_mde:.4f}", str(seed_candidate)])
-
-    print(f"Finished {COMBO_NAME}. Results saved.")
+            writer.writerow(["Combo", "Avg_Src_Acc", "Avg_Src_Acc_STD", "Avg_Src_MDE", "Avg_Src_MDE_STD", "Avg_Tgt_Acc", "Avg_Tgt_Acc_STD", "Avg_Tgt_MDE", "Avg_Tgt_MDE_STD", "Seeds_Detail"])
+        writer.writerow([COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_acc_std:.4f}", f"{avg_s_mde:.4f}", f"{avg_s_mde_std:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_acc_std:.4f}", f"{avg_t_mde:.4f}", f"{avg_t_mde_std:.4f}", str(seed_candidate)])
+        
+    print(f"Finished Combo {COMBO_NAME}. Results saved.")
 
 if __name__ == '__main__':
     main()

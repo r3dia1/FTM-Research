@@ -1,0 +1,2 @@
+Combo,Avg_Src_Acc,Avg_Src_Acc_STD,Avg_Src_MDE,Avg_Src_MDE_STD,Avg_Tgt_Acc,Avg_Tgt_Acc_STD,Avg_Tgt_MDE,Avg_Tgt_MDE_STD,Seeds_Detail
+CDAN_1_2_3_4,98.9456,0.5620,0.0136,0.0087,24.6259,6.8772,0.9106,0.1049,"[67, 423, 123456]"

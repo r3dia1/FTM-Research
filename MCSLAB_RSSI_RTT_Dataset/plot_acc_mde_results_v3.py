@@ -8,7 +8,7 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Times New Roman', 'DejaVu Serif', 'Liberation Serif', 'Bitstream Vera Serif']
 plt.rcParams['font.size'] = 12
 
-def plot_ieee_style_color(csv_file_path, output_dir='output_charts_IEEE_Color'):
+def plot_ieee_style_color(csv_file_path, output_dir='output_charts_IEEE_Color(2026-3-17)'):
     """
     IEEE 論文風格 (彩色版) 更新:
     1. 移除斜線網格等紋理，畫面更乾淨。
@@ -57,12 +57,12 @@ def plot_ieee_style_color(csv_file_path, output_dir='output_charts_IEEE_Color'):
         # 準備架構名稱
         arch_names = []
         for name in data_series.index:
-            clean_name = name.lower()
+            clean_name = name
             if 'acc' in clean_name:
                 clean_name = clean_name.replace('acc', '').strip()
             elif 'mde' in clean_name:
                 clean_name = clean_name.replace('mde', '').strip()
-            arch_names.append(clean_name.upper()) 
+            arch_names.append(clean_name) 
 
         values = data_series.values
         x_pos = np.arange(len(values))
@@ -71,8 +71,10 @@ def plot_ieee_style_color(csv_file_path, output_dir='output_charts_IEEE_Color'):
         fig, ax = plt.subplots(figsize=(8, 5))
         
         # --- 2. 高質感學術彩色色盤 (類似 Seaborn Deep) ---
-        colors = ['#4C72B0', '#DD8452', '#55A868', '#C44E52', '#8172B3', 
-                  '#937860', '#DA8BC3', '#8C8C8C', '#CCB974', '#64B5CD']
+        colors = [
+            '#4C72B0', '#DD8452', '#55A868', '#C44E52', '#8172B3', 
+            '#64B5CD', '#DA8BC3', '#8C8C8C', '#CCB974', '#937860'
+        ]
         # 如果模型數量超過顏色數量，就讓顏色循環使用
         if len(values) > len(colors):
             colors = colors * (len(values) // len(colors) + 1)
@@ -140,7 +142,8 @@ def plot_ieee_style_color(csv_file_path, output_dir='output_charts_IEEE_Color'):
 
 # --- 主程式 ---
 if __name__ == "__main__":
-    csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/source target 1:0.5/avg_result_2_4.csv"]
+    # csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/source target 1:0.5/avg_result_2_4.csv"]
+    csv_files = ["Avg_Acc_MDE_record(source_1_1)/GACDAN/2026-3-17/avg_result_3_17.csv"]
 
     print(f"當前工作目錄: {os.getcwd()}")
     

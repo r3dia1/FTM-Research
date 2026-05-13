@@ -1221,4 +1221,4 @@ Epoch  | Total Loss | Train Cls  | Train D_RSSI | Train D_RTT | Val Cls    | Val
 399    | 2.6575     | 0.1771     | 1.2442       | 1.2363      | 0.0715     | 0.6248     | 0.6185     |             | 0.6809   | -0.035 
 400    | 2.7240     | 0.2298     | 1.2733       | 1.2209      | 0.0795     | 0.6418     | 0.6191     |             | 0.6422   | -0.041 
 Seed 123456 | Src MDE: 0.0079 | Tgt MDE: 0.6865
-Finished FusionDANN_1_2_3_4. Results saved.
+Finished Combo FusionDANN_1_2_3_4. Results saved.

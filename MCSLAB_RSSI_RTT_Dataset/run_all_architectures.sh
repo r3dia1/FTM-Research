@@ -9,10 +9,16 @@ BASE_PATH="/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset"
 
 # 定義所有架構列表 (根據您的實際路徑更新)
 ARCHITECTURES=(
-    # "DANN/dann_v5.py"
     # "DNN/dnn_baseline_script_fix.py"
+    # "FusionDNN/fusion_dnn.py"
+    # "FusionDNN/fusion_dnn_virtual_rtt_test2.py"
+    # "DANN/dann_v5.py"
     # "FusionDANN/fusion_dann_v5.py"
-    "FusionCDAN/ga_cdan.py"
+    # "CDAN/cdan.py"
+    # "FusionCDAN final/fusion_cdan.py"
+    # "DAFI/dafi_v2.py"
+    "DuGDA/DuGDA_v2.py"
+    # "GeoSPA-Net/GeoSPA_Net_v2.py"
 )
 
 # 定義 RTT 組合
@@ -62,7 +68,7 @@ for arch_path in "${ARCHITECTURES[@]}"; do
     # ------------------------------------------------------
     MODES_TO_RUN=()
     
-    if [[ "$dir_name" == "DNN" ]] || [[ "$dir_name" == "DANN" ]]; then
+    if [[ "$dir_name" == "DNN" ]] || [[ "$dir_name" == "DANN" ]] || [[ "$dir_name" == "DAFI" ]] || [[ "$dir_name" == "FusionDNN" ]]; then
         MODES_TO_RUN=("fusion" "rtt")
         echo ">> Architecture type: [Baseline/Single Stream]"
         echo ">> Will run modes: [Fusion, RTT]"
