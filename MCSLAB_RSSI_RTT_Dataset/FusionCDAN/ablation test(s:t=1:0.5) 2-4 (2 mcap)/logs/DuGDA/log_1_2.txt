@@ -1,0 +1,72 @@
+==========================================
+Current Experiment: RTT Combination: ['Dist_mm_1', 'Dist_mm_2']
+RTT Input Dimension: 2
+==========================================
+Start Training Seed 42...
+
+Start CDAN+E Training... (Entropy Conditioning Enabled)
+Epoch  | Total Loss | Tr Cls     | Tr Dom RSSI  | Tr Dom RTT   | Val T Acc  | Val T Entropy | Test MDE
+------------------------------------------------------------------------------------------------------------------------
+1      | 6.9576     | 4.1695     | 1.3935       | 1.3946       | 0.1719     | 3.8037       | 2.2226   |           
+2      | 6.4028     | 3.6674     | 1.3624       | 1.3730       | 0.3812     | 3.7733       | 1.2849   |           
+3      | 6.0509     | 3.3569     | 1.3474       | 1.3467       | 0.4760     | 3.7121       | 1.1199   |           
+4      | 5.7241     | 3.0734     | 1.3141       | 1.3367       | 0.6333     | 3.6658       | 0.9286   |           
+5      | 5.5307     | 2.9124     | 1.2923       | 1.3260       | 0.6521     | 3.6261       | 0.8562   |           
+6      | 5.3281     | 2.7442     | 1.2745       | 1.3094       | 0.6813     | 3.5292       | 0.8116   |           
+7      | 5.0825     | 2.5557     | 1.2328       | 1.2940       | 0.7792     | 3.4911       | 0.8034   |           
+8      | 4.8746     | 2.3808     | 1.2107       | 1.2830       | 0.8135     | 3.3715       | 0.8697   |           
+9      | 4.6839     | 2.2274     | 1.1850       | 1.2715       | 0.8146     | 3.3201       | 0.8887   |           
+10     | 4.5925     | 2.1528     | 1.1738       | 1.2659       | 0.8542     | 3.2633       | 0.8986   |           
+11     | 4.3969     | 1.9957     | 1.1526       | 1.2487       | 0.8802     | 3.0933       | 0.8407   | (ADV -0.67)
+12     | 4.2788     | 1.9279     | 1.1202       | 1.2306       | 0.9146     | 3.0748       | 0.8212   | (ADV -0.62)
+13     | 4.1626     | 1.8155     | 1.1201       | 1.2270       | 0.9125     | 3.0158       | 0.8345   | (ADV -0.60)
+14     | 4.0871     | 1.7470     | 1.1149       | 1.2253       | 0.9406     | 2.9653       | 0.8315   | (ADV -0.54)
+15     | 3.9240     | 1.6494     | 1.0598       | 1.2149       | 0.9344     | 2.8605       | 0.7772   | (ADV -0.50)
+16     | 3.8196     | 1.5507     | 1.0569       | 1.2120       | 0.9469     | 2.8665       | 0.7331   | (ADV -0.49)
+17     | 3.7421     | 1.4944     | 1.0613       | 1.1864       | 0.9271     | 2.7982       | 0.8424   | (ADV -0.47)
+18     | 3.7536     | 1.4912     | 1.0577       | 1.2046       | 0.9594     | 2.6704       | 0.8300   | (ADV -0.38)
+19     | 3.6122     | 1.3653     | 1.0667       | 1.1802       | 0.9740     | 2.5500       | 0.8550   | (ADV -0.30)
+20     | 3.6051     | 1.3855     | 1.0208       | 1.1988       | 0.9573     | 2.5432       | 0.7495   |           
+21     | 3.5236     | 1.2957     | 1.0512       | 1.1767       | 0.9625     | 2.3759       | 0.8917   | (ADV -0.23)
+22     | 3.4393     | 1.2482     | 1.0138       | 1.1772       | 0.9646     | 2.4039       | 0.8709   |           
+23     | 3.4549     | 1.2295     | 1.0579       | 1.1675       | 0.9688     | 2.3852       | 0.7541   | (ADV -0.22)
+24     | 3.3908     | 1.2065     | 1.0368       | 1.1475       | 0.9760     | 2.2997       | 0.7930   | (ADV -0.17)
+25     | 3.3408     | 1.1622     | 1.0350       | 1.1436       | 0.9708     | 2.2307       | 0.7811   | (ADV -0.14)
+26     | 3.2836     | 1.0930     | 1.0305       | 1.1602       | 0.9812     | 2.0982       | 0.8441   | (ADV -0.07)
+27     | 3.2345     | 1.0625     | 1.0112       | 1.1608       | 0.9677     | 2.0770       | 0.8558   |           
+28     | 3.2998     | 1.1051     | 1.0196       | 1.1752       | 0.9781     | 2.0780       | 0.7951   | (ADV -0.06)
+29     | 3.3235     | 1.1557     | 1.0306       | 1.1372       | 0.9729     | 1.9784       | 0.8260   | (ADV -0.02)
+30     | 3.1917     | 1.0329     | 1.0086       | 1.1502       | 0.9729     | 2.0377       | 0.8446   |           
+31     | 3.1825     | 1.0207     | 1.0039       | 1.1579       | 0.9625     | 2.0509       | 0.8988   |           
+32     | 3.1314     | 0.9579     | 1.0188       | 1.1546       | 0.9688     | 1.8813       | 0.8433   | (ADV 0.03)
+33     | 3.1572     | 0.9810     | 1.0181       | 1.1581       | 0.9646     | 1.8416       | 0.8618   | (ADV 0.04)
+34     | 3.1110     | 0.9666     | 0.9971       | 1.1473       | 0.9708     | 1.8351       | 0.7836   | (ADV 0.05)
+35     | 3.1416     | 0.9577     | 1.0127       | 1.1712       | 0.9698     | 1.8376       | 0.8235   |           
+36     | 3.1207     | 0.9324     | 1.0258       | 1.1626       | 0.9792     | 1.8051       | 0.7120   | (ADV 0.08)
+37     | 3.1247     | 0.9214     | 1.0253       | 1.1779       | 0.9667     | 1.7657       | 0.7352   | (ADV 0.08)
+Traceback (most recent call last):
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionCDAN/ablation test(s:t=1:0.5) 2-4 (2 mcap)/DuGDA/DuGDA.py", line 548, in <module>
+    main()
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionCDAN/ablation test(s:t=1:0.5) 2-4 (2 mcap)/DuGDA/DuGDA.py", line 447, in main
+    _, d_logits_rssi_t, d_logits_rtt_t, softmax_t = model(t_rssi_b, t_rtt_b, COORD_TENSOR, alpha=alpha)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset/FusionCDAN/ablation test(s:t=1:0.5) 2-4 (2 mcap)/DuGDA/DuGDA.py", line 161, in forward
+    d_logits_rtt = self.disc_rtt(h_rev_rtt)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/modules/activation.py", line 144, in forward
+    return F.relu(input, inplace=self.inplace)
+  File "/home/mcslab/anaconda3/envs/yutung/lib/python3.10/site-packages/torch/nn/functional.py", line 1695, in relu
+    result = torch.relu_(input)
+KeyboardInterrupt

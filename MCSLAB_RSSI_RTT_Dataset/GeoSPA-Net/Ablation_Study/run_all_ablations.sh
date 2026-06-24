@@ -9,16 +9,16 @@ BASE_PATH="/home/mcslab/yutung/MCSLAB_RSSI_RTT_Dataset"
 
 # 定義所有架構列表
 ARCHITECTURES=(
-    # "sparse baseline/sparse_baseline.py"
-    # "naive densification/naive_densification.py"
-    "GeoSPA_Net/GeoSPA_Net_v3.py"
+    "sparse baseline/sparse_baseline.py"
+    # "naive densification/naive_densification_v3.py"
+    # "GeoSPA_Net/GeoSPA_Net_v7_1.py"
 )
 
 # 定義 RTT 組合
-c1=("1" "2" "3" "4")
-c2=("1 2" "1 3" "1 4" "2 3" "2 4" "3 4")
+# c1=("1" "2" "3" "4")
+# c2=("1 2" "1 3" "1 4" "2 3" "2 4" "3 4")
 c3=("1 2 3" "1 2 4" "1 3 4" "2 3 4")
-c4=("1 2 3 4")
+# c4=("1 2 3 4")
 
 # 將想跑的組合放入 all_combos 中 (目前預設跑 c2)
 all_combos=("${c1[@]}" "${c2[@]}" "${c3[@]}" "${c4[@]}")

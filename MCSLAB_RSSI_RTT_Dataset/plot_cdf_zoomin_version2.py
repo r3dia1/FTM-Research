@@ -77,7 +77,7 @@ ARCH_CONFIG = {
         'color': DUGDA_COLOR
     },
     'GeoSPA-Net': {
-        'subpath': 'GeoSPA-Net/results/cdf_data',
+        'subpath': 'GeoSPA-Net/Ablation_Study/GeoSPA_Net/results/cdf_data(500 epoch version 6)',
         # 'subpath': 'GeoSPA-Net/results/cdf_data_2_4',
         'label': 'GeoSPA-Net',
         'color': GEOSPA_NET_COLOR
@@ -271,14 +271,17 @@ def main():
             axins.plot(x, y, color=color, linestyle=linestyle, linewidth=linewidth, alpha=1.0)
 
         # [需求改進] 2: 設置 Inset Plot 的範圍和修飾
-        x1, x2, y1, y2 = 0.2, 1.0, 0.3, 0.87 # 定義放大範圍 X=0.4m to 1.0m，Y 根據數據調整
+        # x1, x2, y1, y2 = 0.2, 1.0, 0.3, 0.87 # 定義放大範圍 X=0.4m to 1.0m，Y 根據數據調整
+        # x1, x2, y1, y2 = 0.7, 1.5, 0.7, 0.9 # 3 mcap
+        x1, x2, y1, y2 = 0.7, 1.5, 0.6, 0.9 # 2 mcap
         # x1, x2, y1, y2 = 0.2, 1.0, 0.2, 0.7 # 3-17
         axins.set_xlim(x1, x2)
         axins.set_ylim(y1, y2)
         axins.grid(True, linestyle='--', alpha=0.5) # Inset 添加網格
         
         # Inset 刻度設置，只顯示 0.4, 0.6, 0.8, 1.0
-        axins.set_xticks([0.2, 0.4, 0.6, 0.8, 1.0])
+        # axins.set_xticks([0.2, 0.4, 0.6, 0.8, 1.0])
+        axins.set_xticks([0.7, 0.9, 1.1, 1.3, 1.5])
         
         # 添加 mark_inset (在主圖標記放大區域，並連線)
         mark_inset(ax, axins, loc1=2, loc2=3, fc="none", ec="0.5")

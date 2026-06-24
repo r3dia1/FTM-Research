@@ -82,10 +82,56 @@ class RandomizedMultiLinearMap(nn.Module):
         return h
 
 # ==========================================
-# 2. Stage 2: PCN 與 Densification (修正版)
+# 2. Stage 2: PCN 與 Densification (Target-Centric 修正版)
 # ==========================================
+
+def get_target_centric_features(rssi_batch, target_ap_id):
+    """
+    利用原始資料已經算好的 6 維差分 RSSI 來構造 Target-Centric 特徵，
+    避免 MinMaxScaler 獨立縮放造成的數值意義失真。
+    
+    rssi_batch 維度對應:
+    0: RSSI_1, 1: RSSI_2, 2: RSSI_3, 3: RSSI_4
+    4: Diff_1_2, 5: Diff_1_3, 6: Diff_1_4
+    7: Diff_2_3, 8: Diff_2_4
+    9: Diff_3_4
+    """
+    # 1. 取出 Target AP 的絕對 RSSI [batch_size, 1]
+    target_rssi = rssi_batch[:, target_ap_id].unsqueeze(1)
+    
+    # 2. 根據 Target AP 取出對應的差分 RSSI 
+    # 假設 Diff_A_B 代表 A - B。若 Target 是 B，則我們需要 B - A，因此取 -Diff_A_B
+    if target_ap_id == 0:   # 目標是 AP_1
+        diff_1 = rssi_batch[:, 4].unsqueeze(1)   # 1 - 2
+        diff_2 = rssi_batch[:, 5].unsqueeze(1)   # 1 - 3
+        diff_3 = rssi_batch[:, 6].unsqueeze(1)   # 1 - 4
+        
+    elif target_ap_id == 1: # 目標是 AP_2
+        diff_1 = -rssi_batch[:, 4].unsqueeze(1)  # 2 - 1 = -(1 - 2)
+        diff_2 = rssi_batch[:, 7].unsqueeze(1)   # 2 - 3
+        diff_3 = rssi_batch[:, 8].unsqueeze(1)   # 2 - 4
+        
+    elif target_ap_id == 2: # 目標是 AP_3
+        diff_1 = -rssi_batch[:, 5].unsqueeze(1)  # 3 - 1 = -(1 - 3)
+        diff_2 = -rssi_batch[:, 7].unsqueeze(1)  # 3 - 2 = -(2 - 3)
+        diff_3 = rssi_batch[:, 9].unsqueeze(1)   # 3 - 4
+        
+    elif target_ap_id == 3: # 目標是 AP_4
+        diff_1 = -rssi_batch[:, 6].unsqueeze(1)  # 4 - 1 = -(1 - 4)
+        diff_2 = -rssi_batch[:, 8].unsqueeze(1)  # 4 - 2 = -(2 - 4)
+        diff_3 = -rssi_batch[:, 9].unsqueeze(1)  # 4 - 3 = -(3 - 4)
+        
+    else:
+        raise ValueError("Invalid target_ap_id")
+
+    # 3. 拼接成 4 維輸入特徵 [Target_RSSI, Diff_1, Diff_2, Diff_3]
+    features = torch.cat([target_rssi, diff_1, diff_2, diff_3], dim=1)
+    
+    return features
+
 class PathLossCalibrationNetwork(nn.Module):
-    def __init__(self, in_dim=10, out_dim=4):
+    # in_dim 變成 4 (1個絕對 RSSI + 3個相對差分 RSSI)
+    def __init__(self, in_dim=4, out_dim=1):
         super(PathLossCalibrationNetwork, self).__init__()
         self.net = nn.Sequential(
             nn.Linear(in_dim, 32),
@@ -95,50 +141,107 @@ class PathLossCalibrationNetwork(nn.Module):
             nn.Linear(16, out_dim)
         )
 
-    def forward(self, diff_rssi):
-        return self.net(diff_rssi)
+    def forward(self, target_features):
+        return self.net(target_features)
+
+# def train_pcn(data_loader, mc_idx, device, epochs=50, domain_name="Source"):
+#     pcn = PathLossCalibrationNetwork(in_dim=4, out_dim=1).to(device)
+#     if len(mc_idx) == 0: return pcn
+
+#     optimizer = optim.Adam(pcn.parameters(), lr=0.01, weight_decay=1e-4)
+#     criterion = nn.HuberLoss(delta=0.05) 
+    
+#     pcn.train()
+#     print(f">> Training Target-Centric PCN (Stage 2) on {domain_name} Domain...")
+    
+#     for epoch in range(epochs):
+#         total_loss = 0
+#         for rssi, rtt_gt, _ in data_loader:
+#             rssi, rtt_gt = rssi.to(device), rtt_gt.to(device)
+#             optimizer.zero_grad()
+#             batch_loss = 0
+            
+#             # 遍歷每一個 mcAP (你的情境中是 2 台)
+#             for ap_id in mc_idx:
+#                 # 動態抽取 4 維環境特徵
+#                 features = get_target_centric_features(rssi, ap_id)
+#                 y_true = rtt_gt[:, ap_id]
+                
+#                 pred_dist = pcn(features).squeeze()
+                
+#                 # Mask 保護，避免吃到缺失值
+#                 mask = (y_true > -0.99)
+#                 loss = criterion(pred_dist[mask], y_true[mask])
+                
+#                 if loss.numel() > 0 and not torch.isnan(loss):
+#                     batch_loss += loss
+                    
+#             if type(batch_loss) == torch.Tensor: 
+#                 batch_loss.backward()
+#                 optimizer.step()
+#                 total_loss += batch_loss.item()
+                
+#     print(f">> {domain_name} PCN Training Finished. Huber Loss: {total_loss/len(data_loader):.4f}")
+#     pcn.eval()
+#     return pcn
 
 def train_pcn(data_loader, mc_idx, device, epochs=50, domain_name="Source"):
-    """
-    獨立訓練特定 Domain 的 PCN，避免物理公式被彼此污染。
-    """
-    pcn = PathLossCalibrationNetwork(in_dim=10).to(device)
+    pcn = PathLossCalibrationNetwork(in_dim=4, out_dim=1).to(device)
     if len(mc_idx) == 0: return pcn
 
     optimizer = optim.Adam(pcn.parameters(), lr=0.01, weight_decay=1e-4)
     criterion = nn.HuberLoss(delta=0.05) 
     
     pcn.train()
-    print(f">> Training PCN (Stage 2) on {domain_name} Domain...")
+    print(f">> Training Target-Centric PCN (Stage 2) on {domain_name} Domain...")
     
     for epoch in range(epochs):
         total_loss = 0
         for rssi, rtt_gt, _ in data_loader:
             rssi, rtt_gt = rssi.to(device), rtt_gt.to(device)
             optimizer.zero_grad()
-            pred_rtt = pcn(rssi)
-            loss = criterion(pred_rtt[:, mc_idx], rtt_gt[:, mc_idx])
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
+            batch_loss = 0
             
+            # 遍歷每一個 mcAP (你的情境中是 2 台)
+            for ap_id in mc_idx:
+                # 動態抽取 4 維環境特徵
+                features = get_target_centric_features(rssi, ap_id)
+                y_true = rtt_gt[:, ap_id]
+                
+                pred_dist = pcn(features).squeeze()
+                
+                # 直接計算 Loss，不考慮缺失值
+                loss = criterion(pred_dist, y_true)
+                batch_loss += loss
+                    
+            if type(batch_loss) == torch.Tensor: 
+                batch_loss.backward()
+                optimizer.step()
+                total_loss += batch_loss.item()
+                
     print(f">> {domain_name} PCN Training Finished. Huber Loss: {total_loss/len(data_loader):.4f}")
     pcn.eval()
     return pcn
 
 def apply_densification_and_uncertainty(rssi, rtt_real, pcn, mc_idx, legacy_idx, device):
     batch_size = rssi.size(0)
-    with torch.no_grad():
-        pred_rtt = pcn(rssi)
-        
     rtt_densified = rtt_real.clone()
     sigma = torch.zeros(batch_size, TOTAL_APS).to(device)
     
+    with torch.no_grad():
+        # 針對 Legacy AP (你的情境中是另外 2 台)
+        if len(legacy_idx) > 0:
+            for ap_id in legacy_idx:
+                # 幫 Legacy AP 構造它的 4 維環境特徵
+                features = get_target_centric_features(rssi, ap_id)
+                
+                # 丟入訓練好的模型預測
+                pred_dist = pcn(features).squeeze()
+                rtt_densified[:, ap_id] = pred_dist
+                sigma[:, ap_id] = 1.0 # 虛擬距離，給予較高 Uncertainty
+                
     if len(mc_idx) > 0:
-        sigma[:, mc_idx] = 0.1
-    if len(legacy_idx) > 0:
-        rtt_densified[:, legacy_idx] = pred_rtt[:, legacy_idx]
-        sigma[:, legacy_idx] = 1.0
+        sigma[:, mc_idx] = 0.1 # 真實測量，給予較低 Uncertainty
         
     return rtt_densified, sigma
 
@@ -188,6 +291,7 @@ class GeoSPANet(nn.Module):
         self.grl = GradientReversalLayer()
 
     def forward(self, rssi, rtt_densified, coord_tensor, alpha=1.0):
+        
         f_rssi = self.rssi_extractor(rssi)
         f_rtt = self.rtt_extractor(rtt_densified)
         
