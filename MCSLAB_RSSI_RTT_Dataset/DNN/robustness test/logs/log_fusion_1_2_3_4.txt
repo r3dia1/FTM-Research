@@ -1,0 +1,16 @@
+==========================================
+Experiment: DNN_Fusion_RTT_1_2_3_4
+Mode: fusion | Input Dim: 8
+Features: RSSI(4) + RTT(4)
+Future Domain Test: ENABLED (../../2026_4_1/All_Data_With_RSSI_Diff_withoutNA.csv)
+==========================================
+train size = 4704, val size = 1176
+Seed 42 | Best Epoch 136 | Tgt MDE: 0.8563m
+Seed 42 | Best Epoch 136 | Tgt MDE: 0.8563m | Fut MDE: 1.2326m
+train size = 4704, val size = 1176
+Seed 6767 | Best Epoch 98 | Tgt MDE: 0.7199m
+Seed 6767 | Best Epoch 98 | Tgt MDE: 0.7199m | Fut MDE: 1.0920m
+train size = 4704, val size = 1176
+Seed 123456 | Best Epoch 241 | Tgt MDE: 0.7762m
+Seed 123456 | Best Epoch 241 | Tgt MDE: 0.7762m | Fut MDE: 1.2273m
+Finished Combo DNN_Fusion_RTT_1_2_3_4. Results saved.

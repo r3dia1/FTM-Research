@@ -1,0 +1,15 @@
+==========================================
+Experiment: FusionDNN_RTT_1_2_3_4
+Mode: fusion | RTT Dim: 4 | RSSI Dim: 4
+Features: RSSI(4) + RTT(4)
+==========================================
+train size = 4704, val size = 1176
+Seed 42 | Best Epoch 233 | Tgt MDE: 0.6903m
+Seed 42 | Best Epoch 233 | Tgt MDE: 0.6903m | Fut MDE: 1.1401m
+train size = 4704, val size = 1176
+Seed 6767 | Best Epoch 213 | Tgt MDE: 0.6933m
+Seed 6767 | Best Epoch 213 | Tgt MDE: 0.6933m | Fut MDE: 1.0595m
+train size = 4704, val size = 1176
+Seed 123456 | Best Epoch 133 | Tgt MDE: 0.7060m
+Seed 123456 | Best Epoch 133 | Tgt MDE: 0.7060m | Fut MDE: 1.0674m
+Finished Combo FusionDNN_RTT_1_2_3_4. Results saved.

@@ -458,9 +458,13 @@ def main():
     # 計算平均並寫入 Summary CSV
     df_res = pd.DataFrame(results)
     avg_s_acc = df_res['Source_Acc'].mean()
+    avg_s_acc_std = df_res['Source_Acc'].std()
     avg_s_mde = df_res['Source_MDE'].mean()
+    avg_s_mde_std = df_res['Source_MDE'].std()
     avg_t_acc = df_res['Target_Acc'].mean()
+    avg_t_acc_std = df_res['Target_Acc'].std()
     avg_t_mde = df_res['Target_MDE'].mean()
+    avg_t_mde_std = df_res['Target_MDE'].std()
     
     summary_file = os.path.join(RESULT_DIR, "experiment_summary.csv")
     file_exists = os.path.isfile(summary_file)
@@ -469,18 +473,20 @@ def main():
         writer = csv.writer(f)
         if not file_exists:
             # 動態建立標頭
-            headers = ["Combo", "Avg_Src_Acc", "Avg_Src_MDE", "Avg_Tgt_Acc", "Avg_Tgt_MDE"]
+            headers = ["Combo", "Avg_Src_Acc", "Avg_Src_Acc_STD", "Avg_Src_MDE", "Avg_Src_MDE_STD", "Avg_Tgt_Acc", "Avg_Tgt_Acc_STD", "Avg_Tgt_MDE", "Avg_Tgt_MDE_STD"]
             if has_future_test:
-                headers.extend(["Avg_Fut_Acc", "Avg_Fut_MDE"])
+                headers.extend(["Avg_Fut_Acc", "Avg_Fut_Acc_STD", "Avg_Fut_MDE", "Avg_Fut_MDE_STD"])
             headers.append("Seeds_Detail")
             writer.writerow(headers)
             
-        row_data = [RTT_COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_mde:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_mde:.4f}"]
+        row_data = [RTT_COMBO_NAME, f"{avg_s_acc:.4f}", f"{avg_s_acc_std:.4f}", f"{avg_s_mde:.4f}", f"{avg_s_mde_std:.4f}", f"{avg_t_acc:.4f}", f"{avg_t_acc_std:.4f}", f"{avg_t_mde:.4f}", f"{avg_t_mde_std:.4f}"]
         
         if has_future_test:
             avg_f_acc = df_res['Future_Acc'].mean()
+            avg_f_acc_std = df_res['Future_Acc'].std()
             avg_f_mde = df_res['Future_MDE'].mean()
-            row_data.extend([f"{avg_f_acc:.4f}", f"{avg_f_mde:.4f}"])
+            avg_f_mde_std = df_res['Future_MDE'].std()
+            row_data.extend([f"{avg_f_acc:.4f}", f"{avg_f_acc_std:.4f}", f"{avg_f_mde:.4f}", f"{avg_f_mde_std:.4f}"])
             
         row_data.append(str(seed_candidate))
         writer.writerow(row_data)

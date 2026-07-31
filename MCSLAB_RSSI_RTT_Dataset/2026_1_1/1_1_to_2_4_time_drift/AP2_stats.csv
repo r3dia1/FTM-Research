@@ -1,4 +1,4 @@
-Feature,Single_Mean,Full_Mean,Offset (Diff),Single_Std,Full_Std,Std_Ratio,Wasserstein_Dist,KS_P_Value
-RSSI,-62.3,-62.51,-0.2,5.13,6.49,1.27,1.35,4.28e-153
-Dist_mm,4704.1,4553.69,-150.41,2638.16,2409.62,0.91,246.58,5.87e-30
-Std_mm,605.14,594.12,-11.02,473.25,433.04,0.92,56.76,3.17e-44
+Feature,Source_Mean,Target_Mean,Offset (Diff),Source_Std,Target_Std,Std_Ratio,Wasserstein_Dist,JSD,KS_Statistic
+RSSI,-62.3,-62.51,-0.2,5.13,6.49,1.27,1.35,0.1905,0.1591
+Dist_mm,4704.1,4553.69,-150.41,2638.16,2409.62,0.91,246.58,0.1545,0.0701
+Std_mm,605.14,594.12,-11.02,473.25,433.04,0.92,56.76,0.1525,0.0854
